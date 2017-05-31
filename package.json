@@ -1,0 +1,17 @@
+{
+  "name": "node-microservices",
+  "version": "0.0.1",
+  "description": "microservices in nodejs, starting with web client and user service api",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"PORT=3003 npm run server\" \"PORT=3004 npm run client\"",
+    "server": "node server.js",
+    "client": "node client.js"
+  },
+  "author": "Sibyl Gao",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "3.4.0"
+  }
+}
