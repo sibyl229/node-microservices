@@ -2,8 +2,22 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const userAuth = require('./user/auth');
+const cookieSession = require('cookie-session');
+const uuidV4 = require('uuid/v4');
 
 app.set('port', (process.env.PORT || 3001));
+
+app.use(cookieSession({
+  name: 'session',
+  secret: 'TODO move the secret to a config file'
+}));
+
+app.use(function (req, res, next) {
+  if (!req.session.uuid) {
+    req.session.uuid = uuidV4();  // need a fairly unique and unpredictable id
+  }
+  next();
+});
 
 // Express only serves static assets in production
 if (process.env.NODE_ENV === 'production') {

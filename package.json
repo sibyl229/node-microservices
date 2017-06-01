@@ -6,15 +6,18 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "concurrently \"PORT=3003 npm run server\" \"PORT=3004 npm run client\"",
-    "server": "node server.js",
+    "server": "nodemon server.js",
     "client": "node client.js"
   },
   "author": "Sibyl Gao",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "3.4.0"
+    "concurrently": "3.4.0",
+    "nodemon": "1.11.0"
   },
   "dependencies": {
-    "googleapis": "19.0.0"
+    "cookie-session": "2.0.0-beta.2",
+    "googleapis": "19.0.0",
+    "uuid": "3.0.1"
   }
 }
