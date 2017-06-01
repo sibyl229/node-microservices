@@ -13,5 +13,8 @@
   "license": "ISC",
   "devDependencies": {
     "concurrently": "3.4.0"
+  },
+  "dependencies": {
+    "googleapis": "19.0.0"
   }
 }
