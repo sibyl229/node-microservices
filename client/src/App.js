@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Me from './containers/Me';
+import LoginRequired from './user/LoginRequired';
 
 
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
@@ -13,7 +13,7 @@ import createHistory from 'history/createBrowserHistory';
 import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux';
 import { Link, Route } from 'react-router-dom';
 
-import reducers from './reducers'; // Or wherever you keep your reducers
+import userReducer from './user/reducers'; // Or wherever you keep your reducers
 
 
 // Create a history of your choosing (we're using a browser history in this case)
@@ -37,7 +37,7 @@ const enhancer = composeEnhancers(
 );
 const store = createStore(
   combineReducers({
-    ...reducers,
+    user: userReducer,
     router: routerReducer
   }), enhancer);
 
@@ -80,7 +80,7 @@ class App extends Component {
               <li><Link to="/topics">Topics</Link></li>
             </ul>
             <Route exact path="/" component={Home}/>
-            <Route path="me" component={Me} />
+            <Route path="me" component={LoginRequired} />
           </div>
         </ConnectedRouter>
       </Provider>
