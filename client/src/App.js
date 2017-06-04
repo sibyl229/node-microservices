@@ -10,18 +10,19 @@ import { Provider } from 'react-redux';
 
 import createHistory from 'history/createBrowserHistory';
 // import { Route } from 'react-router';
-import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux';
+import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux';
 import { Link, Route } from 'react-router-dom';
 
 import userReducer from './user/reducers'; // Or wherever you keep your reducers
-
+import thunk from 'redux-thunk';
 
 // Create a history of your choosing (we're using a browser history in this case)
 const history = createHistory();
 
 // Build the middleware for intercepting and dispatching navigation actions
 const middleware = [
-  routerMiddleware(history)
+  routerMiddleware(history),
+  thunk
 ];
 
 const composeEnhancers =
@@ -80,7 +81,7 @@ class App extends Component {
               <li><Link to="/topics">Topics</Link></li>
             </ul>
             <Route exact path="/" component={Home}/>
-            <Route path="me" component={LoginRequired} />
+            <Route path="/user" component={LoginRequired} />
           </div>
         </ConnectedRouter>
       </Provider>

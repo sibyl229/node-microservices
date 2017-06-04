@@ -54,7 +54,7 @@ router.get('/oauth2callback', function (req, res) {
           // look for user and create one if not exist
           // create jwt with user id
           // write cookie
-          res.cookie('token', 'AAAAAA', { maxAge: 86400 }).redirect(req.session.redirectTo);
+          res.cookie('JWT', 'AAAAAA', { maxAge: 86400 }).redirect(req.session.redirectTo);
         });
       }
     });
