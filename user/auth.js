@@ -4,6 +4,7 @@ const fs = require('fs');
 const google = require('googleapis');
 var express = require('express');
 var router = express.Router();
+var jwt = require('jsonwebtoken');
 
 const clientSecretPath = path.join(os.homedir(), 'dev-credentials/client_secret_test.json');
 const clientSecret = JSON.parse(fs.readFileSync(clientSecretPath, 'utf8')).web;
@@ -53,8 +54,14 @@ router.get('/oauth2callback', function (req, res) {
           console.log(req.session.redirectTo);
           // look for user and create one if not exist
           // create jwt with user id
+          const jwtPrivateKey = 'TODO: to make this private';
+          const token = jwt.sign({ userId: '1' }, jwtPrivateKey, {
+            algorithm: 'HS256',
+            expiresIn: '7d'
+          });
+
           // write cookie
-          res.cookie('JWT', 'AAAAAA', { maxAge: 86400 }).redirect(req.session.redirectTo);
+          res.cookie('JWT', token, { maxAge: 86400 * 1000 }).redirect(req.session.redirectTo);
         });
       }
     });

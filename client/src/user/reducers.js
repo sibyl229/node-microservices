@@ -4,7 +4,9 @@ const initialState = {
 }
 
 export default (state = initialState, action) => {
-  switch (action.filter) {
+  console.log('action called');
+  console.log(action);
+  switch (action.type) {
     case 'READ_JWT':
       if (action.jwt === state.jwt) {
         return state;
