@@ -81,7 +81,13 @@ class App extends Component {
               <li><Link to="/topics">Topics</Link></li>
             </ul>
             <Route exact path="/" component={Home}/>
-            <Route path="/user" component={LoginRequired} />
+            <Route path="/user" render={
+              () => (
+                <LoginRequired>
+                {({jwt}) => (<span>{jwt}</span>)}
+                </LoginRequired>
+              )
+            } />
           </div>
         </ConnectedRouter>
       </Provider>
