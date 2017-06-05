@@ -36,21 +36,27 @@ function authorizationHeader(jwt) {
 
 export function getUserProfile(userId, jwt) {
   return (dispatch) => {
+    dispatch({
+      type: 'REQUEST_USER_PROFILE'
+    });
     fetch('/api/user', {
       headers: {
         ...authorizationHeader(jwt)
       }
     }).then((response) => {
       if (response.status >= 200 && response.status < 300) {
-        dispatch({
-          type: 'USER_PROFILE_SUCCESS',
-          data: response.json()
-        });
+        console.log(response);
+        return response.json();
       } else {
-        var error = new Error(response.statusText);
-        error.response = response.json();
-        throw error;
+        return response.json().then((error) => {
+          Promise.reject(error);
+        });
       }
+    }).then((json) => {
+      dispatch({
+        type: 'USER_PROFILE_SUCCESS',
+        data: json
+      });
     }).catch((error) => {
       dispatch({
         type: 'USER_PROFILE_FAILURE',

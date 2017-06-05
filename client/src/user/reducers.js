@@ -1,11 +1,18 @@
 const initialState = {
   jwt: null,
-  decodedJwt: null
+  decodedJwt: null,
+  user: {
+    loading: true,
+    data: null,
+    error: null
+  }
 }
 
 export default (state = initialState, action) => {
   console.log('action called');
   console.log(action);
+  const userState = state.user;
+
   switch (action.type) {
     case 'READ_JWT':
       if (action.jwt === state.jwt) {
@@ -17,6 +24,34 @@ export default (state = initialState, action) => {
           decodedJwt: action.decodedJwt
         }
       }
+    case 'REQUEST_USER_PROFILE':
+      return {
+        ...state,
+        user: {
+          ...userState,
+          loading: 1,
+          data: null,
+          error: null
+        }
+      };
+    case 'USER_PROFILE_SUCCESS':
+      return {
+        ...state,
+        user: {
+          ...userState,
+          loading: false,
+          data: action.data
+        }
+      };
+    case 'USER_PROFILE_FAILURE':
+      return {
+        ...state,
+        user: {
+          ...userState,
+          loading: false,
+          error: action.error
+        }
+      };
     default:
       return state;
   }

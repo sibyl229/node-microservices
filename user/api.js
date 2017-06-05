@@ -5,6 +5,7 @@ var router = express.Router();
 router.use(validateJwt);
 
 router.get('/user', function(req, res) {
+  console.log('user called');
   res.json({
     userId: '1',
     email: 'aa@a.com'

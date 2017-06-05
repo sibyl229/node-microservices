@@ -35,4 +35,10 @@ UserProfile.propTypes = {
   jwt: PropTypes.string,
 };
 
-export default connect()(UserProfile);
+const mapStateToProps = (state, ownProps) => {
+  return {
+    userProfileData: {}
+  };
+};
+
+export default connect(mapStateToProps)(UserProfile);
