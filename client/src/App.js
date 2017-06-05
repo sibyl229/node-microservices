@@ -4,6 +4,13 @@ import './App.css';
 import LoginRequired from './user/LoginRequired';
 import UserProfile from './user/UserProfile';
 
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
+// Needed for onTouchTap
+// http://stackoverflow.com/a/34015469/988941
+import ConnectedHeader from './app/ConnectedHeader';
+
 
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
@@ -65,34 +72,39 @@ const Home = () => (
   </div>
 );
 
+injectTapEventPlugin();
+
 class App extends Component {
   render() {
     return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <div className="App">
-            <div className="App-header">
-              <img src={logo} className="App-logo" alt="logo" />
-              <h2>Welcome to React</h2>
+          <MuiThemeProvider>
+            <div className="App">
+              <ConnectedHeader />
+              <div className="App-header">
+                <img src={logo} className="App-logo" alt="logo" />
+                <h2>Welcome to React</h2>
+              </div>
+              <hr/>
+              <ul>
+                <li><Link to="/">Home</Link></li>
+                <li><Link to="/about">About</Link></li>
+                <li><Link to="/topics">Topics</Link></li>
+                <li><Link to="/user">User Profile</Link></li>
+              </ul>
+              <Route exact path="/" component={Home}/>
+              <Route path="/user" render={
+                () => (
+                  <LoginRequired>
+                  {({jwt}) => (
+                    <UserProfile jwt={jwt} userId="1" />
+                  )}
+                  </LoginRequired>
+                )
+              } />
             </div>
-            <hr/>
-            <ul>
-              <li><Link to="/">Home</Link></li>
-              <li><Link to="/about">About</Link></li>
-              <li><Link to="/topics">Topics</Link></li>
-              <li><Link to="/user">User Profile</Link></li>
-            </ul>
-            <Route exact path="/" component={Home}/>
-            <Route path="/user" render={
-              () => (
-                <LoginRequired>
-                {({jwt}) => (
-                  <UserProfile jwt={jwt} userId="1" />
-                )}
-                </LoginRequired>
-              )
-            } />
-          </div>
+          </MuiThemeProvider>
         </ConnectedRouter>
       </Provider>
     );
