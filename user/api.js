@@ -8,7 +8,8 @@ router.get('/user', function(req, res) {
   console.log('user called');
   res.json({
     userId: '1',
-    email: 'aa@a.com'
+    email: 'aa@a.com',
+    name: 'John Smith'
   });
 });
 

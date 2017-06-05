@@ -22,8 +22,14 @@ class UserProfile extends Component {
   }
 
   render() {
+    const {userId, userProfileData} = this.props;
     return (
-      <span> 55555</span>
+      userProfileData ?
+        <div>
+          <h3>{userProfileData.name}</h3>
+          <p>{userProfileData.email}</p>
+        </div> :
+        null
     )
   }
 }
@@ -31,13 +37,16 @@ class UserProfile extends Component {
 UserProfile.propTypes = {
   dispatch: PropTypes.func.isRequired,
   userId: PropTypes.string,
-  userProfileData: PropTypes.object,
+  userProfileData: PropTypes.shape({
+    email: PropTypes.string,
+    name: PropTypes.string
+  }),
   jwt: PropTypes.string,
 };
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    userProfileData: {}
+    userProfileData: state.user.user.data
   };
 };
 
