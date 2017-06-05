@@ -10,6 +10,8 @@ const clientSecretPath = path.join(os.homedir(), 'dev-credentials/client_secret_
 const clientSecret = JSON.parse(fs.readFileSync(clientSecretPath, 'utf8')).web;
 console.log(clientSecret);
 
+const jwtPrivateKey = 'TODO: to make this private';
+
 var OAuth2Client = google.auth.OAuth2;
 
 var oauth2Client = new OAuth2Client(
@@ -54,7 +56,6 @@ router.get('/oauth2callback', function (req, res) {
           console.log(req.session.redirectTo);
           // look for user and create one if not exist
           // create jwt with user id
-          const jwtPrivateKey = 'TODO: to make this private';
           const token = jwt.sign({ userId: '1' }, jwtPrivateKey, {
             algorithm: 'HS256',
             expiresIn: '7d'
@@ -70,9 +71,41 @@ router.get('/oauth2callback', function (req, res) {
   }
 });
 
+function validateJwt(req, res, next) {
+  const authorization = req.get('Authorization');
+
+  if (authorization) {
+    var myRegexp = /^Bearer\s+(.+)$/g;
+    var match = myRegexp.exec(authorization);
+    if (match) {
+      const token = match[1];
+      jwt.verify(token, jwtPrivateKey, (error, decodedToken) => {
+        if (error) {
+          res.status(401).send({
+            error: error
+          });
+        }
+
+        // check if user exist before continue
+
+        else {
+          next();
+        }
+      });
+    } else {
+      res.status(401).send({
+        error: 'no JWT token found'
+      });
+    }
+
+  }
+}
 
 
-module.exports = router;
+module.exports = {
+  router: router,
+  validateJwt: validateJwt
+};
 
 
 

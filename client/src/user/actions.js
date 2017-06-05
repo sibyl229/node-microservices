@@ -1,3 +1,5 @@
+require('isomorphic-fetch');
+
 function readJwtFromCookie() {
   const matches = /JWT=([^;]+)/.exec(document.cookie);
   return matches && matches[1];
@@ -24,6 +26,36 @@ export function authenticate(options = {}) {
   };
 }
 
-export function login() {
+function authorizationHeader(jwt) {
+  return {
+    'Authorization': `Bearer ${jwt}`
+  }
+}
 
+
+
+export function getUserProfile(userId, jwt) {
+  return (dispatch) => {
+    fetch('/api/user', {
+      headers: {
+        ...authorizationHeader(jwt)
+      }
+    }).then((response) => {
+      if (response.status >= 200 && response.status < 300) {
+        dispatch({
+          type: 'USER_PROFILE_SUCCESS',
+          data: response.json()
+        });
+      } else {
+        var error = new Error(response.statusText);
+        error.response = response.json();
+        throw error;
+      }
+    }).catch((error) => {
+      dispatch({
+        type: 'USER_PROFILE_FAILURE',
+        error: error.response
+      });
+    });
+  }
 }

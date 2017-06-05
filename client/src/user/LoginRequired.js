@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { authenticate } from './actions';
 
-const LOGIN_URL = `http://localhost:3003/api/auth?redirectTo=${window.location.href}`;
+const LOGIN_URL = `http://localhost:3003/auth?redirectTo=${window.location.href}`;
 
 class LoginRequired extends Component {
 

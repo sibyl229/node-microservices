@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import LoginRequired from './user/LoginRequired';
+import UserProfile from './user/UserProfile';
 
 
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
@@ -79,12 +80,15 @@ class App extends Component {
               <li><Link to="/">Home</Link></li>
               <li><Link to="/about">About</Link></li>
               <li><Link to="/topics">Topics</Link></li>
+              <li><Link to="/user">User Profile</Link></li>
             </ul>
             <Route exact path="/" component={Home}/>
             <Route path="/user" render={
               () => (
                 <LoginRequired>
-                {({jwt}) => (<span>{jwt}</span>)}
+                {({jwt}) => (
+                  <UserProfile jwt={jwt} userId="1" />
+                )}
                 </LoginRequired>
               )
             } />

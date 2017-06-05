@@ -1,7 +1,8 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const userAuth = require('./user/auth');
+const userAuth = require('./user/auth').router;
+const userApi = require('./user/api').router;
 const cookieSession = require('cookie-session');
 const uuidV4 = require('uuid/v4');
 
@@ -24,11 +25,9 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
 }
 
-app.use('/api/auth', userAuth);
+app.use('/auth', userAuth);
 
-app.get('/api/auth2', function (req, res) {
-  res.send([]);
-});
+app.use('/api', userApi);
 
 // app.get('/*', function (req, res) {
 //   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
