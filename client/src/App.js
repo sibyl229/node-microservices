@@ -86,13 +86,6 @@ class App extends Component {
                 <img src={logo} className="App-logo" alt="logo" />
                 <h2>Welcome to React</h2>
               </div>
-              <hr/>
-              <ul>
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/about">About</Link></li>
-                <li><Link to="/topics">Topics</Link></li>
-                <li><Link to="/user">User Profile</Link></li>
-              </ul>
               <Route exact path="/" component={Home}/>
               <Route path="/user" render={
                 () => (
