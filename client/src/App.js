@@ -10,6 +10,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 import ConnectedHeader from './app/ConnectedHeader';
+import SearchBox from './search/SearchBox';
 
 
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
@@ -22,6 +23,7 @@ import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-r
 import { Link, Route } from 'react-router-dom';
 
 import userReducer from './user/reducers'; // Or wherever you keep your reducers
+import searchReducer from './search/reducers';
 import thunk from 'redux-thunk';
 
 // Create a history of your choosing (we're using a browser history in this case)
@@ -47,7 +49,8 @@ const enhancer = composeEnhancers(
 const store = createStore(
   combineReducers({
     user: userReducer,
-    router: routerReducer
+    router: routerReducer,
+    search: searchReducer
   }), enhancer);
 
 // // Add the reducer to your store on the `router` key
@@ -82,6 +85,7 @@ class App extends Component {
           <MuiThemeProvider>
             <div className="App">
               <ConnectedHeader />
+              <SearchBox />
               <div className="App-header">
                 <img src={logo} className="App-logo" alt="logo" />
                 <h2>Welcome to React</h2>
