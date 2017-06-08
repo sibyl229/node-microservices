@@ -11,7 +11,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // http://stackoverflow.com/a/34015469/988941
 import ConnectedHeader from './app/ConnectedHeader';
 import SearchBox from './search/SearchBox';
-import ResultList from './search/ResultList';
 
 
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
@@ -87,7 +86,6 @@ class App extends Component {
             <div className="App">
               <ConnectedHeader />
               <SearchBox />
-              <ResultList />
               <Route exact path="/" component={Home}/>
               <Route path="/user" render={
                 () => (
