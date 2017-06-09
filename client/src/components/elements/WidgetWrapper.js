@@ -7,13 +7,22 @@ class WidgetWrapper extends Component {
   render() {
     const {title, error, data} = this.props;
     return (
-      <Paper>
+      <Paper style={{
+        textAlign: 'left',
+        padding: '1em 3em'
+      }}>
         <h3>{title}</h3>
         {
           error ? <span>{JSON.stringify}</span> : null
         }
         {
-          hasContent(data) ? this.props.children : <span>No data available</span>
+          hasContent(data) ?
+            this.props.children :
+            <span>
+            {
+              this.props.loading ? 'Loading' : 'No data available'
+            }
+            </span>
         }
       </Paper>
     );
@@ -23,6 +32,7 @@ class WidgetWrapper extends Component {
 WidgetWrapper.propTypes = {
   title: PropTypes.string.isRequired,
   data: PropTypes.object,
+  loading: PropTypes.bool,
   error: PropTypes.object,
   children: PropTypes.node
 };
