@@ -49,7 +49,7 @@ export function getUserProfile(userId, jwt) {
         return response.json();
       } else {
         return response.json().then((error) => {
-          Promise.reject(error);
+          return Promise.reject(error);
         });
       }
     }).then((json) => {

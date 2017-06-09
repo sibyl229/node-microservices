@@ -14,7 +14,7 @@ const SearchBox = (props) => {
       width: '80%',
       margin: '0 auto'
     }}>
-      <TextField id="bb" onChange={onChange}/>
+      <TextField onChange={onChange}/>
       <Paper style={{
         position: 'absolute',
         width: '100%'

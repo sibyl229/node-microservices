@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import LoginRequired from './user/LoginRequired';
 import UserProfile from './user/UserProfile';
+import GenePage from './content/pages/GenePage';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -24,6 +25,8 @@ import { Link, Route } from 'react-router-dom';
 
 import userReducer from './user/reducers'; // Or wherever you keep your reducers
 import searchReducer from './search/reducers';
+import contentReducer from './content/reducers';
+
 import thunk from 'redux-thunk';
 
 // Create a history of your choosing (we're using a browser history in this case)
@@ -50,7 +53,8 @@ const store = createStore(
   combineReducers({
     user: userReducer,
     router: routerReducer,
-    search: searchReducer
+    search: searchReducer,
+    content: contentReducer
   }), enhancer);
 
 // // Add the reducer to your store on the `router` key
@@ -96,6 +100,7 @@ class App extends Component {
                   </LoginRequired>
                 )
               } />
+              <Route path="/gene/:id" component={GenePage} />
             </div>
           </MuiThemeProvider>
         </ConnectedRouter>
