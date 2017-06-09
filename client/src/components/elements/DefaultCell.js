@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-const DefaultCell = (props) => {
+function DefaultCell(props) {
   const data = props.data;
   if (data !== null && typeof data === 'object') {
     if (Array.isArray(data)) {
@@ -9,7 +9,7 @@ const DefaultCell = (props) => {
         <ul>
         {
           data.map((dat) => (
-            <li>{JSON.stringify(dat)}</li>
+            <li>{<DefaultCell data={dat} />}</li>
           ))
         }
         </ul>
