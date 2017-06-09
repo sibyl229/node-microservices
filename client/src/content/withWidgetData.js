@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import WidgetWrapper from './WidgetWrapper';
+import WidgetWrapper from '../components/elements/WidgetWrapper';
 import { loadData } from './actions';
 
 class DataFetcher extends Component {

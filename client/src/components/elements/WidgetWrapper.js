@@ -1,14 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
-
-function hasContent(obj) {
-  if (typeof obj === 'object') {
-    return obj !== null && Object.keys(obj).length > 0
-  } else {
-    return typeof obj !== 'undefined';
-  }
-}
+import { hasContent } from '../utils';
 
 class WidgetWrapper extends Component {
   render() {
