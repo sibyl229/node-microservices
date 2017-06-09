@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { hasContent } from '../utils';
 
 function DefaultCell(props) {
   const data = props.data;
@@ -8,14 +10,21 @@ function DefaultCell(props) {
       return (
         <ul>
         {
-          data.map((dat) => (
+          data.filter((dat) => (
+            hasContent(dat)
+          )).map((dat) => (
             <li>{<DefaultCell data={dat} />}</li>
           ))
         }
         </ul>
       );
     } else {
-      return (<span>{JSON.stringify(data)}</span>);
+      if (data.class) {
+        const {label, id} = data;
+        return <Link to={`/${data.class}/${id}`}>{label}</Link>
+      } else {
+        return (<span>{JSON.stringify(data)}</span>);
+      }
     }
   } else {
     return (<span>{data}</span>)
