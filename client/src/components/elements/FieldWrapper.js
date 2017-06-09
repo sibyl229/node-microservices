@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { hasContent } from '../utils';
+import DefaultCell from './DefaultCell';
 
 function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
@@ -23,7 +24,7 @@ class FieldWrapper extends Component {
               this.props.children({
                 data: data
               }) :
-              JSON.stringify(data) :
+              <DefaultCell data={data} /> :
             <span>No data available</span>
         }
         </div>
