@@ -30,6 +30,14 @@ app.use('/auth', userAuth);
 
 app.use('/api', userApi);
 
+var httpProxy = require('http-proxy');
+var restProxy = httpProxy.createProxyServer();
+app.get('/rest/*', function(req, res) {
+  restProxy.web(req, res, {
+    target: 'http://www.wormbase.org'
+  });
+});
+
 // app.get('/*', function (req, res) {
 //   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 // });

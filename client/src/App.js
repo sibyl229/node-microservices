@@ -3,6 +3,15 @@ import logo from './logo.svg';
 import './App.css';
 import LoginRequired from './user/LoginRequired';
 import UserProfile from './user/UserProfile';
+import GenePage from './content/pages/GenePage';
+
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
+// Needed for onTouchTap
+// http://stackoverflow.com/a/34015469/988941
+import ConnectedHeader from './app/ConnectedHeader';
+import SearchBox from './search/SearchBox';
 
 
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
@@ -15,6 +24,9 @@ import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-r
 import { Link, Route } from 'react-router-dom';
 
 import userReducer from './user/reducers'; // Or wherever you keep your reducers
+import searchReducer from './search/reducers';
+import contentReducer from './content/reducers';
+
 import thunk from 'redux-thunk';
 
 // Create a history of your choosing (we're using a browser history in this case)
@@ -40,7 +52,9 @@ const enhancer = composeEnhancers(
 const store = createStore(
   combineReducers({
     user: userReducer,
-    router: routerReducer
+    router: routerReducer,
+    search: searchReducer,
+    content: contentReducer
   }), enhancer);
 
 // // Add the reducer to your store on the `router` key
@@ -65,34 +79,30 @@ const Home = () => (
   </div>
 );
 
+injectTapEventPlugin();
+
 class App extends Component {
   render() {
     return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <div className="App">
-            <div className="App-header">
-              <img src={logo} className="App-logo" alt="logo" />
-              <h2>Welcome to React</h2>
+          <MuiThemeProvider>
+            <div className="App">
+              <ConnectedHeader />
+              <SearchBox />
+              <Route exact path="/" component={Home}/>
+              <Route path="/user" render={
+                () => (
+                  <LoginRequired>
+                  {({jwt}) => (
+                    <UserProfile jwt={jwt} userId="1" />
+                  )}
+                  </LoginRequired>
+                )
+              } />
+              <Route path="/gene/:id" component={GenePage} />
             </div>
-            <hr/>
-            <ul>
-              <li><Link to="/">Home</Link></li>
-              <li><Link to="/about">About</Link></li>
-              <li><Link to="/topics">Topics</Link></li>
-              <li><Link to="/user">User Profile</Link></li>
-            </ul>
-            <Route exact path="/" component={Home}/>
-            <Route path="/user" render={
-              () => (
-                <LoginRequired>
-                {({jwt}) => (
-                  <UserProfile jwt={jwt} userId="1" />
-                )}
-                </LoginRequired>
-              )
-            } />
-          </div>
+          </MuiThemeProvider>
         </ConnectedRouter>
       </Provider>
     );
