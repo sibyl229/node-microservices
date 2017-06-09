@@ -3,11 +3,22 @@ import PropTypes from 'prop-types';
 
 const DefaultCell = (props) => {
   const data = props.data;
-  switch (data.id) {
-    default:
+  if (data !== null && typeof data === 'object') {
+    if (Array.isArray(data)) {
       return (
-        <span>{JSON.stringify(data)}</span>
+        <ul>
+        {
+          data.map((dat) => (
+            <li>{JSON.stringify(dat)}</li>
+          ))
+        }
+        </ul>
       );
+    } else {
+      return (<span>{JSON.stringify(data)}</span>);
+    }
+  } else {
+    return (<span>{data}</span>)
   }
 };
 
