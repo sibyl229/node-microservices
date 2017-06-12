@@ -18,7 +18,7 @@ const ListCell = (props) => {
 };
 
 ListCell.propTypes = {
-  date: PropTypes.object,
+  data: PropTypes.object,
   render: PropTypes.func
 };
 

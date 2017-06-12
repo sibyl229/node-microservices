@@ -1,20 +1,23 @@
 import React, { Component } from 'react';
 import {Card, CardHeader, CardText} from 'material-ui/Card';
+import HashCell from './HashCell';
 
 const EvidenceCell = (props) => {
   const {content, detail} = props;
-  const {contentData, detailData} = props.data || {};
+  const {text: contentData, evidence: detailData} = props.data || {};
+  console.log(detailData);
   return (
     <Card>
       <CardHeader
-        subtitle={content }
+        title={content || contentData}
         showExpandableButton={true}
       />
       <CardText expandable={true}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-        Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-        Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+        <span>
+        {
+          detail ? detail : <HashCell data={detailData} />
+        }
+        </span>
       </CardText>
     </Card>
   );
