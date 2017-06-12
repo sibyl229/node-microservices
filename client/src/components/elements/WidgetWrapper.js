@@ -5,7 +5,7 @@ import { hasContent } from '../utils';
 
 class WidgetWrapper extends Component {
   render() {
-    const {title, error, data} = this.props;
+    const {title, error, data, loading} = this.props;
     return (
       <Paper style={{
         textAlign: 'left',
@@ -20,7 +20,7 @@ class WidgetWrapper extends Component {
             this.props.children :
             <span>
             {
-              this.props.loading ? 'Loading' : 'No data available'
+              loading ? 'Loading' : 'No data available'
             }
             </span>
         }

@@ -41,12 +41,14 @@ export default function withWidgetData(WidgetComponent) {
     dataUrl: PropTypes.string.isRequired,
     onRequestData: PropTypes.func.isRequired,
     data: PropTypes.object,
-  //  error: PropTypes.string
+    loading: PropTypes.bool,
+    error: PropTypes.string
   };
 
 
   const mapStateToProps = (state) => ({
     data: state.content.data,
+    loading: state.content.loading,
     error: state.content.error
   });
   const mapDispatchToProps = (dispatch, ownProps) => ({
