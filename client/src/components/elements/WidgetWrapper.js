@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
 import { hasContent } from '../utils';
+import { capitalize } from '../utils';
 
 class WidgetWrapper extends Component {
   render() {
@@ -11,7 +12,7 @@ class WidgetWrapper extends Component {
         textAlign: 'left',
         padding: '1em 3em'
       }}>
-        <h3>{title}</h3>
+        <h2>{capitalize(title || '')}</h2>
         {
           error ? <span>{JSON.stringify}</span> : null
         }

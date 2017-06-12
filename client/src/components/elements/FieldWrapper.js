@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { hasContent } from '../utils';
 import DefaultCell from './DefaultCell';
-
-function capitalize(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
+import { capitalize } from '../utils';
 
 class FieldWrapper extends Component {
   render() {

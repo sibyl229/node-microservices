@@ -30,7 +30,7 @@ export default function withWidgetData(WidgetComponent) {
   const DataFetchingWidgetComponent = (props) => {
     const {dataUrl, onRequestData, ...rest} = props;
     return (
-      <DataFetcher dataUrl={dataUrl || `/rest/widget/gene/WBGene00015146/overview?content-type=application/json`} onRequestData={onRequestData}>
+      <DataFetcher dataUrl={dataUrl} onRequestData={onRequestData}>
         <WidgetWrapper {...rest}>
           <WidgetComponent data={rest.data}/>
         </WidgetWrapper>
