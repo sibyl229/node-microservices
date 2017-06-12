@@ -14,7 +14,7 @@ const HashCell = (props) => {
         <li>
         {key.replace(/_+/g, ' ')}:
         <br/>
-        {render ? render({elementData: data[key]}) : <SimpleCell data={data[key]} />}
+        {render({elementValue: data[key]})}
         </li>
       ))
     }
@@ -24,7 +24,7 @@ const HashCell = (props) => {
 
 HashCell.propTypes = {
   data: PropTypes.object,
-  render: PropTypes.func
+  render: PropTypes.func.isRequired
 };
 
 export default HashCell;

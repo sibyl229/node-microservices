@@ -5,7 +5,9 @@ import { Link } from 'react-router-dom';
 const SimpleCell = (props) => {
   const {data} = props;
   if (data !== null && typeof data === 'object') {
-    if (data.class) {
+    if (data.text) {
+      return <span>{data.text}</span>;
+    } else if (data.class) {
       const {label, id} = data;
       return <Link to={`/${data.class}/${id}`}>{label}</Link>;
     } else {
