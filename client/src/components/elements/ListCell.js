@@ -9,8 +9,8 @@ const ListCell = (props) => {
     {
       data.filter((dat) => (
         hasContent(dat)
-      )).map((dat) => (
-        <li>{render({elementData: dat})}</li>
+      )).map((dat, index) => (
+        <li key={index}>{render({elementData: dat})}</li>
       ))
     }
     </ul>
@@ -18,7 +18,7 @@ const ListCell = (props) => {
 };
 
 ListCell.propTypes = {
-  data: PropTypes.object,
+  data: PropTypes.arrayOf(PropTypes.any),
   render: PropTypes.func
 };
 

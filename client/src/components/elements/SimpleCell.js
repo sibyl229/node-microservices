@@ -19,7 +19,7 @@ const SimpleCell = (props) => {
 };
 
 SimpleCell.propTypes = {
-  data: PropTypes.object
+  data: PropTypes.any
 };
 
 export default SimpleCell;

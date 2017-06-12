@@ -30,7 +30,7 @@ class WidgetWrapper extends Component {
 }
 
 WidgetWrapper.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   data: PropTypes.object,
   loading: PropTypes.bool,
   error: PropTypes.object,

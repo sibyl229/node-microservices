@@ -11,7 +11,7 @@ const HashCell = (props) => {
       Object.keys(data).filter((key) => (
         hasContent(data[key])
       )).map((key) => (
-        <li>
+        <li key={key}>
         {key.replace(/_+/g, ' ')}:
         <br/>
         {render({elementValue: data[key]})}
