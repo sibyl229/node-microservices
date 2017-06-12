@@ -1,33 +1,30 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { hasContent } from '../utils';
+import EvidenceCell from './EvidenceCell';
+import SimpleCell from './SimpleCell';
+import ListCell from './ListCell';
 
 function DefaultCell(props) {
   const data = props.data;
   if (data !== null && typeof data === 'object') {
     if (Array.isArray(data)) {
       return (
-        <ul>
-        {
-          data.filter((dat) => (
-            hasContent(dat)
-          )).map((dat) => (
-            <li>{<DefaultCell data={dat} />}</li>
-          ))
-        }
-        </ul>
+        <ListCell
+          data={data}
+          render={
+            ({elementData}) => <SimpleCell data={elementData} />
+          }
+        />
       );
     } else {
-      if (data.class) {
-        const {label, id} = data;
-        return <Link to={`/${data.class}/${id}`}>{label}</Link>
+      if (data.evidence && data.text) {
+        return <EvidenceCell data={data} />;
       } else {
-        return (<span>{JSON.stringify(data)}</span>);
+        return <SimpleCell data={data} />;
       }
     }
   } else {
-    return (<span>{data}</span>)
+    return <SimpleCell data={data} />;
   }
 };
 
