@@ -1,3 +1,5 @@
+import GeneExpressionWidget from './widgets/GeneExpressionWidget';
+
 export default {
   gene: {
     id: 'gene',
@@ -6,7 +8,8 @@ export default {
         id: 'overview'
       },
       {
-        id: 'expression'
+        id: 'expression',
+        render: GeneExpressionWidget
       },
       {
         id: 'external_links'

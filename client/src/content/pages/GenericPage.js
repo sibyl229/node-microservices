@@ -18,25 +18,32 @@ const GenericPage = (props) => {
           path={`${props.match.path}/:widgetId`}
           component={
             (widgetRouteProps) => {
-              const GenericDataWidget = withWidgetData(GenericWidget)
+              const widgetId = widgetRouteProps.match.params.widgetId;
+              const pageWidgets = configs[page] ? configs[page].widgets : [];
+              const CustomWidget = pageWidgets.filter(
+                (widgetConfig) => widgetConfig.id === widgetId
+              ).map(
+                (widgetConfig) => widgetConfig.render
+              )[0];
+              const DataWidget = withWidgetData(CustomWidget || GenericWidget);
               return (
                 <div className="content">
                   <div className="content--left-sidebar">
                     <PageNav
-                      widgets={configs[page] ? configs[page].widgets : []}
+                      widgets={pageWidgets}
                       baseUrl={props.match.url}
-                      activeWidget={widgetRouteProps.match.params.widgetId}
+                      activeWidget={widgetId}
                     />
                   </div>
                   <div className="content--main">
                     <div className="small-only">
                       <ExpandablePageNav
-                        widgets={configs[page] ? configs[page].widgets : []}
+                        widgets={pageWidgets}
                         baseUrl={props.match.url}
-                        activeWidget={widgetRouteProps.match.params.widgetId}
+                        activeWidget={widgetId}
                       />
                     </div>
-                    <GenericDataWidget />
+                    <DataWidget />
                   </div>
                 </div>
               )
