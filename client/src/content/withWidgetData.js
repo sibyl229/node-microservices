@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { matchPath } from 'react-router';
 import WidgetWrapper from '../components/elements/WidgetWrapper';
 import { loadData } from './actions';
 
@@ -46,11 +47,21 @@ export default function withWidgetData(WidgetComponent) {
   };
 
 
-  const mapStateToProps = (state) => ({
-    data: state.content.data,
-    loading: state.content.loading,
-    error: state.content.error
-  });
+  const mapStateToProps = (state) => {
+    const matched = matchPath(state.router.location.pathname, {
+      path: '/:class/:id/:widgetId'
+    });
+    const dataUrl = matched ?
+      `/rest/widget/${matched.params.class}/${matched.params.id}/${matched.params.widgetId}?content-type=application/json` :
+      null;
+    return {
+      data: state.content.data,
+      dataUrl: dataUrl,
+      title: matched ? matched.params.widgetId : '',
+      loading: state.content.loading,
+      error: state.content.error
+    };
+  };
   const mapDispatchToProps = (dispatch, ownProps) => ({
     onRequestData: (dataUrl) => dispatch(loadData(dataUrl))
   });
