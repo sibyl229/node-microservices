@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import LoginRequired from './user/LoginRequired';
 import UserProfile from './user/UserProfile';
-import GenePage from './content/pages/GenePage';
+import GenericPage from './content/pages/GenericPage';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -21,7 +21,7 @@ import { Provider } from 'react-redux';
 import createHistory from 'history/createBrowserHistory';
 // import { Route } from 'react-router';
 import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux';
-import { Link, Route } from 'react-router-dom';
+import { Link, Route, Switch } from 'react-router-dom';
 
 import userReducer from './user/reducers'; // Or wherever you keep your reducers
 import searchReducer from './search/reducers';
@@ -100,7 +100,9 @@ class App extends Component {
                   </LoginRequired>
                 )
               } />
-              <Route path="/gene/:id" component={GenePage} />
+              <Switch>
+                <Route path="/:page/:id" component={GenericPage}/>
+              </Switch>
             </div>
           </MuiThemeProvider>
         </ConnectedRouter>

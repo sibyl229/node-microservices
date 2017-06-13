@@ -8,7 +8,7 @@ class WidgetWrapper extends Component {
   render() {
     const {title, error, data, loading} = this.props;
     return (
-      <Paper style={{
+      <div style={{
         textAlign: 'left',
         padding: '1em 3em'
       }}>
@@ -25,7 +25,7 @@ class WidgetWrapper extends Component {
             }
             </span>
         }
-      </Paper>
+      </div>
     );
   }
 }
