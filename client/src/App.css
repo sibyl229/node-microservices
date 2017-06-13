@@ -24,3 +24,12 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+a:visited {
+    color: #5a3696;
+}
+
+a {
+    text-decoration: none;
+    color: #002bb8;
+}
