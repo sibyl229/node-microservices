@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { matchPath } from 'react-router';
 import withWidgetData from '../withWidgetData';
-import { GenericWidget } from '../widgets/';
+import GenericWidget from '../widgets/GenericWidget';
 import PageNav, { ExpandablePageNav } from './PageNav';
 import configs from '../configs';
 
