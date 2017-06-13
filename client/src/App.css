@@ -33,3 +33,29 @@ a {
     text-decoration: none;
     color: #002bb8;
 }
+
+.content {
+  display: flex;
+}
+
+.content--left-sidebar {
+  flex: 0;
+}
+
+.content--main {
+  flex: 1;
+}
+
+.small-only {
+  display: none;
+}
+
+@media only screen and (max-width : 768px) {
+  .content--left-sidebar {
+    display: none;
+  }
+
+  .small-only {
+    display: inherit;
+  }
+}

@@ -27,24 +27,23 @@ class PageNav extends Component {
 
   render() {
     return (
-      <Expandable>
-        <List>
-        {
-          this.props.widgets.map((widget) => {
-            const widgetId = widget.id;
-            const widgetName = capitalize(widgetId.replace(/_+/g, ' '));
-            return (
-              <ListItem
-                key={widgetId}
-                primaryText={widgetName}
-                isKeyboardFocused={widgetId === this.props.activeWidget}
-                onClick={() => this.props.onChange(`${this.props.baseUrl}/${widgetId}`)}
-              />
-            )
-          })
-        }
-        </List>
-      </Expandable>
+      <List>
+      {
+        this.props.widgets.map((widget) => {
+          const widgetId = widget.id;
+          const widgetName = capitalize(widgetId.replace(/_+/g, ' '));
+          return (
+            <ListItem
+              key={widgetId}
+              primaryText={widgetName}
+              isKeyboardFocused={widgetId === this.props.activeWidget}
+              onClick={() => this.props.onChange(`${this.props.baseUrl}/${widgetId}`)}
+              style={{minWidth: 200}}
+            />
+          )
+        })
+      }
+      </List>
     );
   }
 }
@@ -67,4 +66,12 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(PageNav);
+const ConnectedPageNav = connect(null, mapDispatchToProps)(PageNav);
+
+export default ConnectedPageNav;
+
+export const ExpandablePageNav = (props) => (
+  <Expandable>
+    <ConnectedPageNav {...props}/>
+  </Expandable>
+);

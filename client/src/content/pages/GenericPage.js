@@ -3,7 +3,7 @@ import { Route, Redirect, Switch } from 'react-router-dom';
 import { matchPath } from 'react-router';
 import withWidgetData from '../withWidgetData';
 import { GenericWidget } from '../widgets/';
-import PageNav from './PageNav';
+import PageNav, { ExpandablePageNav } from './PageNav';
 import configs from '../configs';
 
 const GenericPage = (props) => {
@@ -20,13 +20,24 @@ const GenericPage = (props) => {
             (widgetRouteProps) => {
               const GenericDataWidget = withWidgetData(GenericWidget)
               return (
-                <div>
-                  <PageNav
-                    widgets={configs[page] ? configs[page].widgets : []}
-                    baseUrl={props.match.url}
-                    activeWidget={widgetRouteProps.match.params.widgetId}
-                  />
-                  <GenericDataWidget />
+                <div className="content">
+                  <div className="content--left-sidebar">
+                    <PageNav
+                      widgets={configs[page] ? configs[page].widgets : []}
+                      baseUrl={props.match.url}
+                      activeWidget={widgetRouteProps.match.params.widgetId}
+                    />
+                  </div>
+                  <div className="content--main">
+                    <div className="small-only">
+                      <ExpandablePageNav
+                        widgets={configs[page] ? configs[page].widgets : []}
+                        baseUrl={props.match.url}
+                        activeWidget={widgetRouteProps.match.params.widgetId}
+                      />
+                    </div>
+                    <GenericDataWidget />
+                  </div>
                 </div>
               )
             }
