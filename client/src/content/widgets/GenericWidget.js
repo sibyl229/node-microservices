@@ -5,7 +5,7 @@ import FieldWrapper from '../../components/elements/FieldWrapper';
 const GenericWidget = (props) => {
   return (
     <div>
-      {JSON.stringify(Object.keys(props.data.fields))}
+      {JSON.stringify(Object.keys(props.data.fields), null, 4)}
       {
         Object.keys(props.data.fields).map((fieldKey) => (
           <FieldWrapper key={fieldKey}
