@@ -3,18 +3,36 @@ import PropTypes from 'prop-types';
 import { hasContent } from '../utils';
 import DefaultCell from './DefaultCell';
 import { capitalize } from '../utils';
+import Divider from 'material-ui/Divider';
+import FontIcon from 'material-ui/FontIcon';
+import IconButton from 'material-ui/IconButton';
 
 class FieldWrapper extends Component {
   render() {
     const {title, data : fieldData} = this.props;
     const {data, description} = fieldData || {};
     return (
-      <div>
+      <div style={{
+        margin: '1em 0'
+      }}>
         <h3 style={{
-          margin: '1em 0 0'
-        }}>{capitalize(title)}</h3>
-        <p><em>{capitalize(description)}</em></p>
-        <div>
+          margin: '0'
+        }}>
+          {capitalize(title)}
+          <IconButton
+            iconClassName="material-icons"
+            tooltip={capitalize(description)}
+            tooltipPosition="bottom-right"
+            tooltipStyles={{
+              fontSize: 12,
+            }}>
+            info_outline
+          </IconButton>
+        </h3>
+        <Divider />
+        <div style={{
+          margin: '0.5em 0'
+        }}>
         {
           hasContent(data) ?
             this.props.children ?
@@ -25,7 +43,6 @@ class FieldWrapper extends Component {
             <span>No data available</span>
         }
         </div>
-        <hr/>
       </div>
     );
   }
