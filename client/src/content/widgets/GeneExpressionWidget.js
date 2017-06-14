@@ -11,11 +11,8 @@ const GeneExpressionWidget = (props) => {
       <br/>custom expression widget
       <FieldWrapper
         title={'Expression cluster'}
-        data={props.data.fields.expression_cluster}>
-        {
-          ({data}) => <Table data={data}/>
-        }
-      </FieldWrapper>
+        data={props.data.fields.expression_cluster}
+        render={Table} />
       {
         Object.keys(props.data.fields).map((fieldKey) => (
           <FieldWrapper key={fieldKey}

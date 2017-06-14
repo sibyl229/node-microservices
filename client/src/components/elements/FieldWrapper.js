@@ -35,8 +35,8 @@ class FieldWrapper extends Component {
         }}>
         {
           hasContent(data) ?
-            this.props.children ?
-              this.props.children({
+            this.props.render ?
+              this.props.render({
                 data: data
               }) :
               <DefaultCell data={data} /> :
@@ -51,7 +51,7 @@ class FieldWrapper extends Component {
 FieldWrapper.propTypes = {
   title: PropTypes.string.isRequired,
   data: PropTypes.object,
-  children: PropTypes.func
+  render: PropTypes.func
 };
 
 export default FieldWrapper;
