@@ -1,12 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import FieldWrapper from '../../components/elements/FieldWrapper';
+import Table from '../../components/elements/Table';
 
 const GeneExpressionWidget = (props) => {
   return (
     <div>
       {JSON.stringify(Object.keys(props.data.fields), null, 4)}
+
       <br/>custom expression widget
+      <FieldWrapper
+        title={'Expression cluster'}
+        data={props.data.fields.expression_cluster}>
+        {
+          ({data}) => <Table data={data}/>
+        }
+      </FieldWrapper>
       {
         Object.keys(props.data.fields).map((fieldKey) => (
           <FieldWrapper key={fieldKey}

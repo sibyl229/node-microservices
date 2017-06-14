@@ -11,7 +11,7 @@ const SimpleCell = (props) => {
       const {label, id} = data;
       return <Link to={`/${data.class}/${id}`}>{label}</Link>;
     } else {
-      return (<span>{JSON.stringify(data)}</span>);
+      return (<span style={{wordBreak: 'break-all'}}>{JSON.stringify(data)}</span>);
     }
   } else {
     return <span>{data}</span>;

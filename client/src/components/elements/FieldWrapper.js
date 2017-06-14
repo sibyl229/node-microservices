@@ -34,7 +34,7 @@ class FieldWrapper extends Component {
 FieldWrapper.propTypes = {
   title: PropTypes.string.isRequired,
   data: PropTypes.object,
-  children: PropTypes.node
+  children: PropTypes.func
 };
 
 export default FieldWrapper;
