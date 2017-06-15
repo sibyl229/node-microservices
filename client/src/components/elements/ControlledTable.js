@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import WBTable, { WBTableRow } from './Table';
+import PaginationToolbar from './PaginationToolbar';
 import {
   Table,
   TableBody
@@ -15,7 +16,7 @@ class ControlledTable extends Component {
     super(props);
     this.state = {
       offset: 0,
-      pageSize: 10,
+      pageSize: 5,
       filterString: 'a',
       rowHtmls: []
     };
@@ -34,7 +35,7 @@ class ControlledTable extends Component {
     // super Hacks to get the rendered text of each row for text filter
     const rowHtmls = new Array((props.data || []).length);
     const domNode = document.createElement('div');
-    ReactDOM.render(
+    const tempElement = ReactDOM.render(
       <StaticRouter context={{}}>
         <MuiThemeProvider>
           <Table>
@@ -78,11 +79,15 @@ class ControlledTable extends Component {
     const {offset, pageSize} = this.state;
     const subsetData = (data || []).filter(
       (rowData, index) => this.matchFilter(index)
-    ).slice(offset, pageSize);
-    console.log(subsetData);
+    );
+
     return (
-      <WBTable data={subsetData} {...rest}>
-      </WBTable>
+      <div>
+        <WBTable data={subsetData.slice(offset, offset + pageSize)} {...rest} />
+        <PaginationToolbar count={subsetData.length} pageSize={this.state.pageSize} onPageChange={(offset) => (this.setState({
+          offset: offset
+        }))}/>
+      </div>
     );
   };
 }

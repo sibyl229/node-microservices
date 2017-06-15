@@ -104,5 +104,9 @@ WBTable.propTypes = {
   filterString: PropTypes.string
 };
 
+
+
 export default WBTable;
-export { WBTableRow };
+export {
+  WBTableRow
+};
