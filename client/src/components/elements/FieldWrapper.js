@@ -9,7 +9,7 @@ import IconButton from 'material-ui/IconButton';
 
 class FieldWrapper extends Component {
   render() {
-    const {title, data : fieldData} = this.props;
+    const {title, render: CustomRender, data : fieldData} = this.props;
     const {data, description} = fieldData || {};
     return (
       <div style={{
@@ -36,9 +36,7 @@ class FieldWrapper extends Component {
         {
           hasContent(data) ?
             this.props.render ?
-              this.props.render({
-                data: data
-              }) :
+              <CustomRender data={data} /> :
               <DefaultCell data={data} /> :
             <span>No data available</span>
         }
