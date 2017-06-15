@@ -98,7 +98,9 @@ class WBTable extends Component {
     this.updateRowHtml(this.props);
   }
   componentWillReceiveProps = (nextProps) => {
-    this.updateRowHtml(nextProps);
+    if (nextProps.data !== this.props.data || nextProps.columns !== this.props.columns) {
+      this.updateRowHtml(nextProps);
+    }
   }
 
   render() {
