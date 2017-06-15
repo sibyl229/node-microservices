@@ -71,26 +71,35 @@ class WBTable extends Component {
 
   updateRowHtml = (props) => {
     // super Hacks to get the rendered text of each row for text filter
-    const rowsHtmls = (props.data || []).map(
-      (rowData) => {
-        const domNode = document.createElement('div');
-        ReactDOM.render(
-          <StaticRouter context={{}}>
-            <MuiThemeProvider>
-              <Table>
-                <TableBody>
-                  <WBTableRow data={rowData} columns={props.columns} />
-                </TableBody>
-              </Table>
-            </MuiThemeProvider>
-          </StaticRouter>,
-          domNode
-        );
-        return (domNode.innerHTML || '').replace(/<\/?[^>]+(>|$)/g, " ");
-      }
+    const rowHtmls = new Array((props.data || []).length);
+    const domNode = document.createElement('div');
+    ReactDOM.render(
+      <StaticRouter context={{}}>
+        <MuiThemeProvider>
+          <Table>
+            <TableBody>
+              {
+                (props.data || []).map(
+                  (rowData, index) => {
+                    return (
+                      <WBTableRow
+                        key={index}
+                        ref={(rowNode) => rowHtmls[index] = (ReactDOM.findDOMNode(rowNode).innerHTML || '').replace(/<\/?[^>]+(>|$)/g, " ")}
+                        data={rowData}
+                        columns={props.columns} />
+                    )
+                  }
+                )
+              }
+            </TableBody>
+          </Table>
+        </MuiThemeProvider>
+      </StaticRouter>,
+      domNode
     );
+
     this.setState({
-      rowHtmls: rowsHtmls
+      rowHtmls: rowHtmls
     });
   }
 
