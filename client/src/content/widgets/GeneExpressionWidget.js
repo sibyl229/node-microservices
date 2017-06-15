@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import FieldWrapper from '../../components/elements/FieldWrapper';
-import Table from '../../components/elements/Table';
+import ControlledTable from '../../components/elements/ControlledTable';
 
 const GeneExpressionWidget = (props) => {
   return (
@@ -12,7 +12,7 @@ const GeneExpressionWidget = (props) => {
       <FieldWrapper
         title={'Expression cluster'}
         data={props.data.fields.expression_cluster}
-        render={Table} />
+        render={ControlledTable} />
       {
         Object.keys(props.data.fields).map((fieldKey) => (
           <FieldWrapper key={fieldKey}
