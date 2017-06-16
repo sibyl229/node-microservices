@@ -44,13 +44,17 @@ class SearchBox extends Component {
     return (
       <div style={{
         position: 'relative',
-        width: '80%',
-        margin: '0 auto',
+//        width: '80%',
+//        margin: '0 auto',
+        backgroundColor: '#5C6BC0',
+        padding: '0 1em',
         zIndex: 10
       }}>
         <TextField
           value={this.state.value}
           floatingLabelText={'Search for a gene'}
+          floatingLabelStyle={{color: '#C5CAE9'}}
+          inputStyle={{color: 'white'}}
           onChange={this.handleChange}
           onKeyPress={this.handleKeyPress} />
         <RaisedButton
