@@ -5,6 +5,8 @@ import LoginRequired from './user/LoginRequired';
 import UserProfile from './user/UserProfile';
 import GenericPage from './content/pages/GenericPage';
 import SearchPage  from './search/SearchPage';
+import GenericStaticPage from './staticContent/GenericStaticPage';
+import StaticIndexPage from './staticContent/StaticIndexPage';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -27,6 +29,7 @@ import { Link, Route, Switch, Redirect } from 'react-router-dom';
 import userReducer from './user/reducers'; // Or wherever you keep your reducers
 import searchReducer from './search/reducers';
 import contentReducer from './content/reducers';
+import staticContentReducer from './staticContent/reducers';
 
 import thunk from 'redux-thunk';
 
@@ -55,7 +58,8 @@ const store = createStore(
     user: userReducer,
     router: routerReducer,
     search: searchReducer,
-    content: contentReducer
+    content: contentReducer,
+    staticContent: staticContentReducer
   }), enhancer);
 
 // // Add the reducer to your store on the `router` key
@@ -91,8 +95,9 @@ class App extends Component {
             <div className="App">
               <ConnectedHeader />
               <SearchBox />
-              <Redirect exact path="/" to="/search" />
+              {/* <Redirect exact path="/" to="/search" /> */}
               <Switch>
+                <Route exact path="/" component={SearchPage} />
                 <Route path="/user" render={
                   () => (
                     <LoginRequired>
@@ -103,6 +108,10 @@ class App extends Component {
                   )
                 } />
                 <Route path="/search" component={SearchPage} />
+                <Route exact path="/guide" component={StaticIndexPage} />
+                <Route path="/guide/:id" render={
+                  ({match}) => <GenericStaticPage contentUrl={`http://www.wormbase.org/rest/widget/static/${match.params.id}`} />
+                } />
                 <Route path="/:page/:id" component={GenericPage}/>
               </Switch>
             </div>
