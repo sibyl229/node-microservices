@@ -54,8 +54,6 @@ class WBTable extends Component {
   render() {
     const props = this.props;
 
-
-    //console.log();
     return (
       <Table>
         <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
