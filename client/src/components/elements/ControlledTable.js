@@ -16,7 +16,7 @@ class ControlledTable extends Component {
     super(props);
     this.state = {
       offset: 0,
-      pageSize: 5,
+      pageSize: 10,
       filterString: 'a',
       rowHtmls: []
     };

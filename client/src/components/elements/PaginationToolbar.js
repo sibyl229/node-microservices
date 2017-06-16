@@ -7,6 +7,9 @@ const PageNumberButton = (props) => {
     <FlatButton
       backgroundColor={props.active || props.activeIndex === props.index ? 'rgba(0, 0, 0, 0.1)' : 'inherit'}
       onClick={() => props.onPageSelect(props.index)}
+      style={{
+        minWidth: 40
+      }}
       {...props}
     >
     {props.index + 1}
@@ -47,11 +50,11 @@ class PaginationToolbar extends Component {
 
       return (
         <div>
-          <span>
+          <p>
           {
-            `showing ${offset + 1} to ${Math.min(offset + pageSize, count)} of ${count} rows`
+            `Showing ${offset + 1} to ${Math.min(offset + pageSize, count)} of ${count} rows`
           }
-          </span>
+          </p>
           <PageNumberButton onPageSelect={(pageIndex) => this.updateCurrentPage(pageIndex)} index={0} activeIndex={currentPage} />
           {
             middle[0] > 1 ? <FlatButton disabled={true}>...</FlatButton> : null
