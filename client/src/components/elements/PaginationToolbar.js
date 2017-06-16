@@ -47,6 +47,11 @@ class PaginationToolbar extends Component {
 
       return (
         <div>
+          <span>
+          {
+            `showing ${offset + 1} to ${Math.min(offset + pageSize, count)} of ${count} rows`
+          }
+          </span>
           <PageNumberButton onPageSelect={(pageIndex) => this.updateCurrentPage(pageIndex)} index={0} activeIndex={currentPage} />
           {
             middle[0] > 1 ? <FlatButton disabled={true}>...</FlatButton> : null
