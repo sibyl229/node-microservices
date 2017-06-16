@@ -96,6 +96,7 @@ class App extends Component {
               <ConnectedHeader />
               <SearchBox />
               {/* <Redirect exact path="/" to="/search" /> */}
+              <div style={{textAlign: 'left', margin: '2em'}}>
               <Switch>
                 <Route exact path="/" component={SearchPage} />
                 <Route path="/user" render={
@@ -114,6 +115,7 @@ class App extends Component {
                 } />
                 <Route path="/:page/:id" component={GenericPage}/>
               </Switch>
+              </div>
             </div>
           </MuiThemeProvider>
         </ConnectedRouter>
