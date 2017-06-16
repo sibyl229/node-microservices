@@ -15,7 +15,7 @@ export default getMuiTheme({
     primary1Color: colors.indigo500,
     primary2Color: colors.indigo700,
     primary3Color: colors.grey400,
-    accent1Color: colors.indigo300,
+    accent1Color: colors.amberA400,
     accent2Color: colors.grey100,
     accent3Color: colors.grey500,
     textColor: colors.darkBlack,
