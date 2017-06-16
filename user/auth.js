@@ -88,15 +88,18 @@ function validateJwt(req, res, next) {
         } else {
           // check if user exist before continue
           const userId = decodedToken.userId;
-          model.getUser(userId, (user) => {
-            if (user) {
-              next();
-            } else {
-              res.status(401).send({
-                error: 'user does not exist'
-              });
+          model.getUser(userId).then(
+            (user) => {
+              if (user) {
+                req.userId = userId;
+                next();
+              } else {
+                res.status(401).send({
+                  error: 'user does not exist'
+                });
+              }
             }
-          });
+          );
         }
       });
     } else {

@@ -9,10 +9,16 @@ router.use(validateJwt);
 router.get('/user', function(req, res) {
   const userId = req.userId;
   console.log(`user ${userId} called`);
-  model.getUser(userId, (data, error) => {
-    console.log('callbakc is calledddd');
-    res.json(data);
-  });
+  model.getUser(userId).then(
+    (user) => {
+      if (user) {
+        console.log(`got user  `);
+        res.json(user);
+      } else {
+        res.status(404).end();
+      }
+    }
+  );
 });
 
 module.exports = {

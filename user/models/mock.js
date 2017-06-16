@@ -7,11 +7,13 @@ function createUser() {
 
 }
 
-function getUser(userId, callback) {
-  callback({
-    userId: '1',
-    email: 'aa@a.com',
-    name: 'John Smith'
+function getUser(userId) {
+  return new Promise((resolve, reject) => {
+    resolve({
+      userId: '1',
+      email: 'aa@a.com',
+      name: 'John Smith'
+    });
   });
 }
 
