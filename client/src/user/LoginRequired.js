@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { authenticate } from './actions';
+import { authenticate, logout } from './actions';
+import RaisedButton from 'material-ui/RaisedButton';
 
 const LOGIN_URL = `http://localhost:3003/auth?redirectTo=${window.location.href}`;
 
@@ -20,11 +21,17 @@ class LoginRequired extends Component {
   render() {
     return (
       this.props.jwt ?
-        (this.props.children ?
-          this.props.children({
-            jwt: this.props.jwt
-          }) : null) :
-        <a href={LOGIN_URL}>Login</a>
+        <div>
+          <RaisedButton label="Logout" onClick={() => this.props.dispatch(logout())} />
+          {
+            this.props.children ?
+              this.props.children({
+                jwt: this.props.jwt
+              }) :
+              null
+          }
+        </div> :
+        <a href={LOGIN_URL}>Login with Google</a>
     );
   }
 }

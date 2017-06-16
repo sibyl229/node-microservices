@@ -24,6 +24,11 @@ export default (state = initialState, action) => {
           decodedJwt: action.decodedJwt
         }
       }
+    case 'CLEAR_LOCAL_PROFILE':
+      return {
+        ...initialState,
+        error: action.error || null
+      }
     case 'REQUEST_USER_PROFILE':
       return {
         ...state,

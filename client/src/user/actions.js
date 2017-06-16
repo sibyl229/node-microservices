@@ -1,3 +1,4 @@
+import { push } from 'react-router-redux';
 require('isomorphic-fetch');
 
 function readJwtFromCookie() {
@@ -32,7 +33,26 @@ function authorizationHeader(jwt) {
   }
 }
 
+function delete_cookie( name, path, domain ) {
+  if((document.cookie || '').search(new RegExp(name)) > -1) {
+    document.cookie = name + "=" +
+      ((path) ? ";path="+path:"")+
+      ((domain)?";domain="+domain:"") +
+      ";expires=Thu, 01 Jan 1970 00:00:01 GMT";
+  }
+}
 
+export function logout(error) {
+  return (dispatch) => {
+    delete_cookie('JWT', '/');
+    console.log(document.cookie);
+//    dispatch(push('/user'));
+    dispatch({
+      type: 'CLEAR_LOCAL_PROFILE',
+      error: error
+    });
+  }
+};
 
 export function getUserProfile(userId, jwt) {
   return (dispatch) => {
@@ -58,10 +78,13 @@ export function getUserProfile(userId, jwt) {
         data: json
       });
     }).catch((error) => {
-      dispatch({
-        type: 'USER_PROFILE_FAILURE',
-        error: error.response
-      });
+      dispatch(logout(error));
+//      dispatch(push('/user'));
+//       dispatch({
+// //        type: 'USER_PROFILE_FAILURE',
+//         type: 'CLEAR_LOCAL_PROFILE',
+//         error: error.response
+//       });
     });
   }
 }
