@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import theme from './app/theme';
 import LoginRequired from './user/LoginRequired';
 import UserProfile from './user/UserProfile';
 import GenericPage from './content/pages/GenericPage';
@@ -91,7 +92,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <MuiThemeProvider>
+          <MuiThemeProvider muiTheme={theme}>
             <div className="App">
               <ConnectedHeader />
               <SearchBox />
