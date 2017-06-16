@@ -1,37 +1,79 @@
 import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import Paper from 'material-ui/Paper';
+import RaisedButton from 'material-ui/RaisedButton';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { search } from './actions';
+import { search, suggest } from './actions';
 import AutoCompleteList from './AutoCompleteList';
+import SearchPage from './SearchPage';
 
-const SearchBox = (props) => {
-  const {onChange, ...restProps} = props;
-  return (
-    <div style={{
-      position: 'relative',
-      width: '80%',
-      margin: '0 auto'
-    }}>
-      <TextField onChange={onChange}/>
-      <Paper style={{
-        position: 'absolute',
-        width: '100%'
+class SearchBox extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: ''
+    };
+  }
+
+  handleChange = (event, newValue) => {
+    this.setState({
+      value: newValue
+    }, () => {
+      this.props.onChange(event, newValue);
+    })
+  }
+
+  handleSubmit = (event) => {
+    this.props.onSubmit(event, this.state.value);
+    this.props.onChange(event, '');
+    // this.setState({
+    //   value: ''
+    // });
+  }
+
+  handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      this.handleSubmit(event);
+    }
+  }
+
+  render () {
+    const {onChange, onSubmit, ...restProps} = this.props;
+    return (
+      <div style={{
+        position: 'relative',
+        width: '80%',
+        margin: '0 auto',
+        zIndex: 10
       }}>
-        <AutoCompleteList {...restProps}/>
-      </Paper>
-    </div>
-  )
-};
+        <TextField
+          value={this.state.value}
+          onChange={this.handleChange}
+          onKeyPress={this.handleKeyPress} />
+        <RaisedButton
+          label="Search"
+          onClick={this.handleSubmit} />
+        <Paper style={{
+          position: 'absolute',
+          width: '100%'
+        }}>
+          <AutoCompleteList {...restProps}/>
+        </Paper>
+      </div>
+    )
+  };
+}
 
 
 SearchBox.propTypes = {
   ...AutoCompleteList.propTypes,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired
 };
 
-function formatQuery(queryString) {
+function formatSuggestQuery(queryString) {
   return `
     query {
       getGenesByNames(names: ["${queryString}"], after: "-1") {
@@ -41,13 +83,24 @@ function formatQuery(queryString) {
   `
 }
 
+function formatFullQuery(queryString) {
+  return `
+    query {
+      getGenesByNames(names: ["${queryString}"], after: "-1") {
+        ${SearchPage.fragment}
+      }
+    }
+  `
+}
+
 const mapStateToProps = (state) => ({
-  loading: state.search.loading,
-  getGenesByNames: state.search.results.getGenesByNames
+  loading: state.search.suggest.loading,
+  getGenesByNames: state.search.suggest.results.getGenesByNames
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onChange: (event, newValue) => dispatch(search(newValue, formatQuery, event.target))
+  onChange: (event, newValue) => dispatch(suggest(newValue, formatSuggestQuery, event.target)),
+  onSubmit: (event, newValue) => dispatch(search(newValue, formatFullQuery, event.target)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBox);

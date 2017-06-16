@@ -21,8 +21,7 @@ const ConnectedTabs = connect(mapStateToProps, mapDispatchToProps)(Tabs);
 
 export default (props) => (
   <ConnectedTabs>
-    <Tab label='Download' value='/download' />
-    <Tab label='Tools' value='/tools' />
+    <Tab label='Search' value='/search' />
     <Tab label='My WormBase' value='/user/profile' />
   </ConnectedTabs>
 )

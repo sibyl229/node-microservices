@@ -4,6 +4,7 @@ import './App.css';
 import LoginRequired from './user/LoginRequired';
 import UserProfile from './user/UserProfile';
 import GenericPage from './content/pages/GenericPage';
+import SearchPage  from './search/SearchPage';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -91,16 +92,17 @@ class App extends Component {
               <ConnectedHeader />
               <SearchBox />
               <Route exact path="/" component={Home}/>
-              <Route path="/user" render={
-                () => (
-                  <LoginRequired>
-                  {({jwt}) => (
-                    <UserProfile jwt={jwt} userId="1" />
-                  )}
-                  </LoginRequired>
-                )
-              } />
               <Switch>
+                <Route path="/user" render={
+                  () => (
+                    <LoginRequired>
+                    {({jwt}) => (
+                      <UserProfile jwt={jwt} userId="1" />
+                    )}
+                    </LoginRequired>
+                  )
+                } />
+                <Route path="/search" component={SearchPage} />
                 <Route path="/:page/:id" component={GenericPage}/>
               </Switch>
             </div>

@@ -65,9 +65,6 @@ endCursor
     node {
       id
       public_name
-      concise_description {
-        text
-      }
     }
   }
 `;

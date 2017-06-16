@@ -14,7 +14,9 @@ const GeneExpressionWidget = (props) => {
         data={props.data.fields.expression_cluster}
         render={ControlledTable} />
       {
-        Object.keys(props.data.fields).map((fieldKey) => (
+        Object.keys(props.data.fields).filter(
+          (fieldKey) => fieldKey !== 'expression_cluster'
+        ).map((fieldKey) => (
           <FieldWrapper key={fieldKey}
             title={fieldKey.replace(/_+/g, ' ')}
             data={props.data.fields[fieldKey]} />
