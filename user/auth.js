@@ -5,6 +5,7 @@ const google = require('googleapis');
 var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken');
+var model =  require('./models/mock');
 
 const clientSecretPath = path.join(os.homedir(), 'dev-credentials/client_secret_test.json');
 const clientSecret = JSON.parse(fs.readFileSync(clientSecretPath, 'utf8')).web;
@@ -84,12 +85,18 @@ function validateJwt(req, res, next) {
           res.status(401).send({
             error: error
           });
-        }
-
-        // check if user exist before continue
-
-        else {
-          next();
+        } else {
+          // check if user exist before continue
+          const userId = decodedToken.userId;
+          model.getUser(userId, (user) => {
+            if (user) {
+              next();
+            } else {
+              res.status(401).send({
+                error: 'user does not exist'
+              });
+            }
+          });
         }
       });
     } else {
