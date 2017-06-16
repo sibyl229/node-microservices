@@ -1,3 +1,4 @@
+import { push } from 'react-router-redux';
 require('isomorphic-fetch');
 
 export function suggest(queryString, queryFormatter, targetElement) {
@@ -40,6 +41,7 @@ export function search(queryString, queryFormatter, targetElement) {
       type: 'SEND_SEARCH_QUERY',
       queryString: queryString
     });
+    dispatch(push('/search'));
 
     //fetch('http://localhost:4003/', {
     fetch('http://52.90.214.72:4003/', {
