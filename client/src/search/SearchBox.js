@@ -50,6 +50,7 @@ class SearchBox extends Component {
       }}>
         <TextField
           value={this.state.value}
+          floatingLabelText={'Search for a gene'}
           onChange={this.handleChange}
           onKeyPress={this.handleKeyPress} />
         <RaisedButton
@@ -59,7 +60,9 @@ class SearchBox extends Component {
           position: 'absolute',
           width: '100%'
         }}>
-          <AutoCompleteList {...restProps}/>
+          <AutoCompleteList
+            onSelect={(event) => this.props.onChange(event, '')}
+            {...restProps} />
         </Paper>
       </div>
     )

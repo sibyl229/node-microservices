@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {List, ListItem} from 'material-ui/List';
 import Popover from 'material-ui/Popover/Popover';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { search } from './actions';
 
 class AutoCompleteList extends Component {
@@ -31,7 +32,11 @@ class AutoCompleteList extends Component {
         <List>
         {
             getGenesByNames.edges.map((edge) => (
-              <ListItem key={edge.node.id}>{edge.node.public_name}</ListItem>
+              <Link key={edge.node.id} style={{color: 'black'}} to={`/gene/${edge.node.id}`}>
+                <ListItem onClick={this.props.onSelect}>
+                {edge.node.public_name}
+                </ListItem>
+              </Link>
             ))
         }
         </List> :
@@ -53,6 +58,7 @@ AutoCompleteList.propTypes = {
     )
   }),
   loading: PropTypes.bool,
+  onSelect: PropTypes.func
 //  targetElementId: PropTypes.string.isRequired
   //itemRender: PropTypes.func.isRequired
 };
