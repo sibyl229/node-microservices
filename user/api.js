@@ -11,14 +11,14 @@ router.get('/user', function(req, res) {
   console.log(`user ${userId} called`);
   model.getUser(userId).then(
     (user) => {
-      if (user) {
-        console.log(`got user  `);
-        res.json(user);
-      } else {
-        res.status(404).end();
-      }
+      console.log(`got user ${userId} `);
+      res.json(user);
     }
-  );
+  ).catch((error) => {
+    console.log('in /user');
+    console.log(error);
+    res.status(401).end();
+  });
 });
 
 module.exports = {

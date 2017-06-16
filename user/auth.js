@@ -51,19 +51,28 @@ router.get('/oauth2callback', function (req, res) {
         oauth2Client.setCredentials(tokens);
         google.oauth2('v2').userinfo.get({ auth: oauth2Client }, function (err, profile) {
           if (err) {
-            return console.log('An error occured', err);
-          }
-          console.log(profile);
-          console.log(req.session.redirectTo);
-          // look for user and create one if not exist
-          // create jwt with user id
-          const token = jwt.sign({ userId: '1' }, jwtPrivateKey, {
-            algorithm: 'HS256',
-            expiresIn: '7d'
-          });
+            res.status(401).send(err);
+          } else if (!profile.verified_email) {
+            res.status(401).send('Unverified google email');
+          } else {
+            model.createUser({
+              email: profile.email,
+              name: profile.name
+            }).then((user) => {
+              console.log('createUser success');
+              console.log(profile);
+              console.log(req.session.redirectTo);
+              // look for user and create one if not exist
+              // create jwt with user id
+              const token = jwt.sign({ userId: user.id }, jwtPrivateKey, {
+                algorithm: 'HS256',
+                expiresIn: '7d'
+              });
 
-          // write cookie
-          res.cookie('JWT', token, { maxAge: 86400 * 1000 }).redirect(req.session.redirectTo);
+              // write cookie
+              res.cookie('JWT', token, { maxAge: 86400 * 1000 }).redirect(req.session.redirectTo);
+            })
+          }
         });
       }
     });
@@ -90,16 +99,14 @@ function validateJwt(req, res, next) {
           const userId = decodedToken.userId;
           model.getUser(userId).then(
             (user) => {
-              if (user) {
-                req.userId = userId;
-                next();
-              } else {
-                res.status(401).send({
-                  error: 'user does not exist'
-                });
-              }
+              req.userId = userId;
+              next();
             }
-          );
+          ).catch((error) => {
+            res.status(401).send({
+              error: 'user does not exist'
+            });
+          });
         }
       });
     } else {
