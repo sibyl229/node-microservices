@@ -22,7 +22,7 @@ import { Provider } from 'react-redux';
 import createHistory from 'history/createBrowserHistory';
 // import { Route } from 'react-router';
 import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux';
-import { Link, Route, Switch } from 'react-router-dom';
+import { Link, Route, Switch, Redirect } from 'react-router-dom';
 
 import userReducer from './user/reducers'; // Or wherever you keep your reducers
 import searchReducer from './search/reducers';
@@ -91,7 +91,7 @@ class App extends Component {
             <div className="App">
               <ConnectedHeader />
               <SearchBox />
-              <Route exact path="/" component={Home}/>
+              <Redirect exact path="/" to="/search" />
               <Switch>
                 <Route path="/user" render={
                   () => (
