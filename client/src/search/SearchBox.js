@@ -44,8 +44,10 @@ class SearchBox extends Component {
     return (
       <div style={{
         position: 'relative',
-        width: '80%',
-        margin: '0 auto',
+//        width: '80%',
+//        margin: '0 auto',
+        backgroundColor: '#4FC3F7',
+        padding: '0 1em',
         zIndex: 10
       }}>
         <TextField
