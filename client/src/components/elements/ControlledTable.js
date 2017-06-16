@@ -74,6 +74,15 @@ class ControlledTable extends Component {
     }
   }
 
+  handlePageChange = (offset) => {
+    this.setState({
+      offset: offset
+    }, () => {
+      const domNode = ReactDOM.findDOMNode(this.element);
+      domNode.scrollIntoView();
+    });
+  }
+
   render() {
     const {data, ...rest} = this.props;
     const {offset, pageSize} = this.state;
@@ -82,11 +91,13 @@ class ControlledTable extends Component {
     );
 
     return (
-      <div>
+      <div ref={(element) => this.element = element}>
         <WBTable data={subsetData.slice(offset, offset + pageSize)} {...rest} />
-        <PaginationToolbar count={subsetData.length} pageSize={this.state.pageSize} onPageChange={(offset) => (this.setState({
-          offset: offset
-        }))}/>
+        <PaginationToolbar
+          count={subsetData.length}
+          pageSize={this.state.pageSize}
+          onPageChange={this.handlePageChange}
+        />
       </div>
     );
   };
