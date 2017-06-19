@@ -74,9 +74,9 @@ export function logout(error) {
   }
 };
 
-export function getUserProfile(userId, jwt) {
+export function authenticate(jwt) {
   return (dispatch) => {
-    const jwtPromise = new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       let validJwt = jwt;
       if (!validJwt) {
         validJwt = getJWT();
@@ -95,8 +95,15 @@ export function getUserProfile(userId, jwt) {
         reject("no valid JWT found");
       }
     });
+  }
+}
 
-    jwtPromise.then((jwt) => {
+export function getUserProfile(userId, jwt) {
+  return (dispatch) => {
+
+    dispatch(
+      authenticate(jwt)
+    ).then((jwt) => {
       dispatch({
         type: 'REQUEST_USER_PROFILE',
         redirect: '/user'
