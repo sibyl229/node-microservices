@@ -73,7 +73,7 @@ export function logout(error) {
   }
 };
 
-export function authenticate(jwt) {
+export function authenticate(jwt, options={}) {
   return (dispatch) => {
     return new Promise((resolve, reject) => {
       let validJwt = jwt;
@@ -94,7 +94,9 @@ export function authenticate(jwt) {
         reject("no valid JWT found");
       }
     }).catch((error) => {
-      dispatch(push('/user/profile'));
+      if (!options.ignoreError) {
+        dispatch(push('/user/profile'));
+      }
     });
   }
 }
@@ -191,8 +193,9 @@ export function postBookmark(url, jwt) {
 export function getBookmarkByUrl(url, jwt, options) {
   return (dispatch) => {
     dispatch(
-      authenticate(jwt)
+      authenticate(jwt, options)
     ).then((jwt) => {
+
       dispatch({
         type: 'GET_BOOKMARK_SENT',
         url: url
@@ -216,10 +219,10 @@ export function getBookmarkByUrl(url, jwt, options) {
         data: json
       });
     }).catch((error) => {
-      dispatch(logout(error));
-      if (!options.ignoreError) {
-        dispatch(authenticate());
-      }
+      // dispatch(logout(error));
+      // if (!options.ignoreError) {
+      //   dispatch(authenticate());
+      // }
     });
   }
 }

@@ -13,6 +13,7 @@ class BookmarkButton extends Component {
   }
 
   componentDidMount() {
+    console.log('mount button');
     this.props.onFetch();
   }
 
@@ -63,9 +64,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(postBookmark(ownProps.url, ownProps.jwt))
   },
   onFetch: () => {
-    if (ownProps.jwt) {
+    console.log(ownProps);
+//    if (ownProps.jwt) {
       dispatch(getBookmarkByUrl(ownProps.url, ownProps.jwt, {ignoreError: true}))
-    }
+//    }
   }
 });
 

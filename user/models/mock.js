@@ -27,6 +27,7 @@ function getUser(userId) {
 }
 
 function getBookmarks(userId, filterFunc) {
+  console.log(bookmarks);
   return getUser(userId).then(
     (user) => {
       return bookmarks.filter((bookmark) => {
@@ -83,6 +84,7 @@ function deleteBookmark(userId, bookmarkId) {
 module.exports = {
   createUser,
   getUser,
+  getBookmarks,
   getBookmarkByUrl,
   addBookmark,
   deleteBookmark
