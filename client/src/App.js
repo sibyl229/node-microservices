@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import theme from './app/theme';
-import LoginRequired from './user/LoginRequired';
+import AuthButton from './user/AuthButton';
 import UserProfile from './user/UserProfile';
 import GenericPage from './content/pages/GenericPage';
 import SearchPage  from './search/SearchPage';
@@ -103,8 +103,7 @@ class App extends Component {
                 <Route path="/user" render={
                   () => (
                     <div>
-                      <LoginRequired>
-                      </LoginRequired>
+                      <AuthButton />
                       <Route path="/user/profile" component={UserProfile} />
                     </div>
                   )

@@ -6,7 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 const LOGIN_URL = `http://localhost:3003/auth?redirectTo=${window.location.href}`;
 
-class LoginRequired extends Component {
+class AuthButton extends Component {
 
   // componentDidMount() {
   //   this.props.dispatch(authenticate());
@@ -32,7 +32,7 @@ class LoginRequired extends Component {
   }
 }
 
-LoginRequired.propTypes = {
+AuthButton.propTypes = {
   children: PropTypes.node,
   dispatch: PropTypes.func.isRequired,
   jwt: PropTypes.string
@@ -46,4 +46,4 @@ const mapStateToProps = (state, ownProps) => {
 
 export default connect(
   mapStateToProps
-)(LoginRequired);
+)(AuthButton);
