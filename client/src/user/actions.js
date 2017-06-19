@@ -94,6 +94,8 @@ export function authenticate(jwt) {
       } else {
         reject("no valid JWT found");
       }
+    }).catch((error) => {
+      dispatch(push('/user/profile'));
     });
   }
 }
@@ -140,21 +142,27 @@ export function getUserProfile(userId, jwt) {
 }
 
 
-export function postBookmark(userId, url, jwt) {
+export function postBookmark(url, jwt) {
   return (dispatch) => {
-    dispatch({
-      type: 'POST_BOOKMARK_SENT',
-      url: url
-    });
-    fetch('/api/user/bookmark', {
-      method: 'POST',
-      headers: {
-        ...authorizationHeader(jwt)
-      },
-      body: JSON.stringify({
-        userId,
-        url,
-      })
+    dispatch(
+      authenticate(jwt)
+    ).then((jwt) => {
+      dispatch({
+        type: 'POST_BOOKMARK_SENT',
+        url: url
+      });
+      return fetch('/api/user/bookmarks', {
+        method: 'POST',
+        headers: {
+          ...authorizationHeader(jwt),
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          bookmark: {
+            url: url
+          }
+        })
+      });
     }).then((response) => {
       if (response.status >= 200 && response.status < 300) {
         console.log(response);
@@ -171,7 +179,7 @@ export function postBookmark(userId, url, jwt) {
       });
     }).catch((error) => {
       dispatch(logout(error));
-      dispatch()
+      dispatch(authenticate())
 //      dispatch(push('/user'));
 //       dispatch({
 // //        type: 'USER_PROFILE_FAILURE',
