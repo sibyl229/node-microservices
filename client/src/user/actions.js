@@ -40,7 +40,6 @@ export function getJWT(options = {}) {
 
   if (jwt) {
     const decodedJwt = decodeJwt(jwt);
-    console.log(decodedJwt.exp > (Date.now() / 1000));
     if (decodedJwt.exp > (Date.now() / 1000) && !options.error) {
       return jwt;
     }
@@ -165,7 +164,6 @@ export function postBookmark(url, jwt) {
       });
     }).then((response) => {
       if (response.status >= 200 && response.status < 300) {
-        console.log(response);
         return response.json();
       } else {
         return response.json().then((error) => {
@@ -206,7 +204,6 @@ export function getBookmarkByUrl(url, jwt, options) {
       });
     }).then((response) => {
       if (response.status >= 200 && response.status < 300) {
-        console.log(response);
         return response.json();
       } else {
         return response.json().then((error) => {
