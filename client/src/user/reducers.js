@@ -24,11 +24,19 @@ const addBookmark = (state, action) => {
       ].slice(0, 10)
     }
   }
+};
+
+const deleteBookmark = (state, action) => {
+  const otherBookmarks = state.bookmarks.filter(
+    (bookmark) => bookmark.id !== action.data.id
+  );
+  return {
+    ...state,
+    bookmarks: otherBookmarks
+  }
 }
 
 export default (state = initialState, action) => {
-  console.log('action called');
-  console.log(action);
   const userState = state.user;
 
   switch (action.type) {
@@ -89,7 +97,10 @@ export default (state = initialState, action) => {
     case 'POST_BOOKMARK_SUCCESS':
       return addBookmark(state, action);
     case 'GET_BOOKMARK_SUCCESS':
+      // bookmark needs to be added on the client side
       return addBookmark(state, action);
+    case 'DELETE_BOOKMARK_SUCCESS':
+      return deleteBookmark(state, action);
     default:
       return state;
   }

@@ -74,8 +74,8 @@ function deleteBookmark(userId, bookmarkId) {
   return getUser(userId).then(() => {
     let deletedBookmark;
     if (bookmarkId < bookmarks.length && bookmarkId >= 0) {
-      deletedBookmark = bookmarks[bookmarks]
-      bookmarks[bookmarks] = null;
+      deletedBookmark = bookmarks[bookmarkId]
+      bookmarks[bookmarkId] = null;
     }
     return deletedBookmark;
   });

@@ -190,12 +190,55 @@ export function postBookmark(url, jwt) {
   }
 }
 
+export function deleteBookmark(url, jwt) {
+  return (dispatch) => {
+    dispatch(
+      authenticate(jwt)
+    ).then((jwt) => {
+      dispatch({
+        type: 'DELETE_BOOKMARK_SENT',
+        url: url
+      });
+      return fetch(`/api/user/bookmark?path=${url}`, {
+        method: 'DELETE',
+        headers: {
+          ...authorizationHeader(jwt),
+        }
+      });
+    }).then((response) => {
+      if (response.status >= 200 && response.status < 300) {
+        return response.json();
+      } else {
+        return response.json().then((error) => {
+          return Promise.reject(error);
+        });
+      }
+    }).then((json) => {
+      dispatch({
+        type: 'DELETE_BOOKMARK_SUCCESS',
+        data: json
+      });
+    }).catch((error) => {
+      console.log(`deleting failed with ${JSON.stringify(error)}`);
+      dispatch(logout(error));
+      dispatch(authenticate())
+//      dispatch(push('/user'));
+//       dispatch({
+// //        type: 'USER_PROFILE_FAILURE',
+//         type: 'CLEAR_LOCAL_PROFILE',
+//         error: error.response
+//       });
+    });
+  }
+}
+
+
+
 export function getBookmarkByUrl(url, jwt, options) {
   return (dispatch) => {
     dispatch(
       authenticate(jwt, options)
     ).then((jwt) => {
-
       dispatch({
         type: 'GET_BOOKMARK_SENT',
         url: url

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import IconButton from 'material-ui/IconButton';
 import { amberA400 } from 'material-ui/styles/colors';
 import { connect } from 'react-redux';
-import { postBookmark, getBookmarkByUrl } from './actions';
+import { postBookmark, deleteBookmark, getBookmarkByUrl } from './actions';
 
 
 
@@ -27,9 +27,9 @@ class BookmarkButton extends Component {
     const props = this.props;
     return (
       <IconButton
-        onClick={props.onClick}
+        onClick={() => props.onClick(props.bookmarked)}
         iconClassName="material-icons"
-        tooltip="Save bookmark"
+        tooltip={props.bookmarked ? "Delete bookmark": "Save bookmark"}
         tooltipPosition="bottom-right"
         tooltipStyles={{
           fontSize: 12
@@ -60,11 +60,16 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onClick: () => {
-    dispatch(postBookmark(ownProps.url, ownProps.jwt))
+  onClick: (bookmarked) => {
+    console.log(`bookmarked ${bookmarked}`);
+    if (bookmarked) {
+      dispatch(deleteBookmark(ownProps.url, ownProps.jwt))
+    } else {
+      //dispatch(postBookmark(ownProps.url, ownProps.jwt))
+      dispatch(postBookmark(ownProps.url, ownProps.jwt))
+    }
   },
   onFetch: () => {
-    console.log(ownProps);
 //    if (ownProps.jwt) {
       dispatch(getBookmarkByUrl(ownProps.url, ownProps.jwt, {ignoreError: true}))
 //    }

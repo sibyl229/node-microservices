@@ -54,6 +54,25 @@ router.get('/user/bookmark', function(req, res) {
   });
 });
 
+router.delete('/user/bookmark', function(req, res) {
+  const userId = req.userId;
+  model.getUser(userId).then(
+    (user) => {
+      model.getBookmarkByUrl(userId, req.query.path).then(
+        (bookmark) => bookmark.id
+      ).then(
+        (id) => model.deleteBookmark(userId, id)
+      ).then(
+        (deletedBookmark) => res.json(deletedBookmark)
+      )
+    }
+  ).catch((error) => {
+    console.log('delete error');
+    console.log(error);
+    res.status(401).end();
+  });
+});
+
 
 
 
