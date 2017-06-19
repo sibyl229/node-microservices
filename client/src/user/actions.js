@@ -74,7 +74,7 @@ export function logout(error) {
 };
 
 export function authenticate(jwt, options={}) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     return new Promise((resolve, reject) => {
       let validJwt = jwt;
       if (!validJwt) {
@@ -95,7 +95,11 @@ export function authenticate(jwt, options={}) {
       }
     }).catch((error) => {
       if (!options.ignoreError) {
-        dispatch(push('/user/profile'));
+        dispatch({
+          type: 'VISIT_LOGIN',
+          redirect: getState().router.location.pathname
+        });
+        dispatch(push('/user'));
       }
     });
   }

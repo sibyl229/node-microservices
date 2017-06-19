@@ -1,6 +1,7 @@
 const initialState = {
   jwt: null,
   decodedJwt: null,
+  redirect: '/',
   user: {
     loading: true,
     data: null,
@@ -50,9 +51,15 @@ export default (state = initialState, action) => {
           decodedJwt: action.decodedJwt
         }
       }
+    case 'VISIT_LOGIN':
+      return {
+        ...state,
+        redirect: action.redirect === '/user' ? state.redirect : (action.redirect || '/')
+      }
     case 'CLEAR_LOCAL_PROFILE':
       return {
         ...initialState,
+        redirect: state.redirect,
         error: action.error || null
       }
     case 'REQUEST_USER_PROFILE':
