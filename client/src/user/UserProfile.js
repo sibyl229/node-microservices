@@ -46,6 +46,7 @@ UserProfile.propTypes = {
 
 const mapStateToProps = (state, ownProps) => {
   return {
+    jwt: state.user.jwt,
     userProfileData: state.user.user.data
   };
 };

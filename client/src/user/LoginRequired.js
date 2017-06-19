@@ -8,15 +8,15 @@ const LOGIN_URL = `http://localhost:3003/auth?redirectTo=${window.location.href}
 
 class LoginRequired extends Component {
 
-  componentDidMount() {
-    this.props.dispatch(authenticate());
-  }
-
-  componentWillUpdate(nextProps) {
-    if (!nextProps.jwt) {
-      this.props.dispatch(authenticate());
-    }
-  }
+  // componentDidMount() {
+  //   this.props.dispatch(authenticate());
+  // }
+  //
+  // componentWillUpdate(nextProps) {
+  //   if (!nextProps.jwt) {
+  //     this.props.dispatch(authenticate());
+  //   }
+  // }
 
   render() {
     return (
@@ -24,11 +24,7 @@ class LoginRequired extends Component {
         <div>
           <RaisedButton label="Logout" onClick={() => this.props.dispatch(logout())} />
           {
-            this.props.children ?
-              this.props.children({
-                jwt: this.props.jwt
-              }) :
-              null
+            this.props.children
           }
         </div> :
         <a href={LOGIN_URL}>Login with Google</a>
@@ -37,7 +33,7 @@ class LoginRequired extends Component {
 }
 
 LoginRequired.propTypes = {
-  children: PropTypes.func,
+  children: PropTypes.node,
   dispatch: PropTypes.func.isRequired,
   jwt: PropTypes.string
 };

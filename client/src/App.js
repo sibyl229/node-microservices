@@ -102,11 +102,11 @@ class App extends Component {
                 <Route exact path="/" component={SearchPage} />
                 <Route path="/user" render={
                   () => (
-                    <LoginRequired>
-                    {({jwt}) => (
-                      <UserProfile jwt={jwt} userId="1" />
-                    )}
-                    </LoginRequired>
+                    <div>
+                      <LoginRequired>
+                      </LoginRequired>
+                      <Route path="/user/profile" component={UserProfile} />
+                    </div>
                   )
                 } />
                 <Route path="/search" component={SearchPage} />
