@@ -38,6 +38,9 @@ router.get('/', function (req, res) {
     // state: { foo: 'bar' }
     state: req.session.uuid
   });
+
+  //TODO: compare redirectTo with a whitelist of trusted redirectPaths
+  // but still not ideal. Probably better to handle the redirect on client side
   req.session.redirectTo = req.query.redirectTo;
   res.redirect(consentPageURL);
 });
