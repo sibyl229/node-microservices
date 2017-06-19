@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import theme from './app/theme';
-import LoginRequired from './user/LoginRequired';
+import AuthButton from './user/AuthButton';
 import UserProfile from './user/UserProfile';
 import GenericPage from './content/pages/GenericPage';
 import SearchPage  from './search/SearchPage';
@@ -102,11 +102,10 @@ class App extends Component {
                 <Route exact path="/" component={SearchPage} />
                 <Route path="/user" render={
                   () => (
-                    <LoginRequired>
-                    {({jwt}) => (
-                      <UserProfile jwt={jwt} userId="1" />
-                    )}
-                    </LoginRequired>
+                    <div>
+                      <AuthButton />
+                      <Route path="/user/profile" component={UserProfile} />
+                    </div>
                   )
                 } />
                 <Route path="/search" component={SearchPage} />

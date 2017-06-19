@@ -24,7 +24,7 @@ export default (state = initialState, action) => {
     case 'FETCH_DATA_FAILURE':
       return state.dataUrl === action.dataUrl ? {
         ...state,
-        loading: false,        
+        loading: false,
         error: action.error
       } : state;
     default:

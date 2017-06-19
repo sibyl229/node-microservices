@@ -5,6 +5,7 @@ import withWidgetData from '../withWidgetData';
 import GenericWidget from '../widgets/GenericWidget';
 import PageNav, { ExpandablePageNav } from './PageNav';
 import configs from '../configs';
+import BookmarkButton from '../../user/BookmarkButton';
 
 const GenericPage = (props) => {
   const {page} = props.match.params;
@@ -43,6 +44,7 @@ const GenericPage = (props) => {
                         activeWidget={widgetId}
                       />
                     </div>
+                    <div style={{float: 'right', marginTop: '1em'}}><BookmarkButton url={props.location.pathname} /></div>
                     <DataWidget />
                   </div>
                 </div>
