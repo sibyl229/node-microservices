@@ -47,8 +47,8 @@ export default function withWidgetData(WidgetComponent) {
   };
 
 
-  const mapStateToProps = (state) => {
-    const matched = matchPath(state.router.location.pathname, {
+  const mapStateToProps = (state, ownProps) => {
+    const matched = matchPath(ownProps.location.pathname, {
       path: '/:class/:id/:widgetId'
     });
     const dataUrl = matched ?
