@@ -28,13 +28,33 @@ router.post('/user/bookmarks', function(req, res) {
   const userId = req.userId;
   model.getUser(userId).then(
     (user) => {
-      model.addBookmark(userId, req.body.bookmark)
-      res.json(user);
+      model.addBookmark(userId, req.body.bookmark).then(
+        (newBookmark) => {
+          res.json(newBookmark);
+        }
+      );
     }
   ).catch((error) => {
     res.status(401).end();
   });
 });
+
+router.get('/user/bookmark', function(req, res) {
+  const userId = req.userId;
+  model.getUser(userId).then(
+    (user) => {
+      model.getBookmarkByUrl(userId, req.query.path).then(
+        (bookmark) => {
+          res.json(bookmark);
+        }
+      )
+    }
+  ).catch((error) => {
+    res.status(401).end();
+  });
+});
+
+
 
 
 

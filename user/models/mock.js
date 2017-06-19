@@ -40,7 +40,7 @@ function getBookmarks(userId, filterFunc) {
   );
 }
 
-function getBookmark(userId, bookmarkUrl) {
+function getBookmarkByUrl(userId, bookmarkUrl) {
   return getUser(userId).then(() => {
     getBookmarks(userId, (bookmark) => bookmark.url === bookmarkUrl)
   });
@@ -73,7 +73,7 @@ function deleteBookmark(userId, bookmarkId) {
 module.exports = {
   createUser,
   getUser,
-  getBookmarks,
+  getBookmarkByUrl,
   addBookmark,
   deleteBookmark
 };

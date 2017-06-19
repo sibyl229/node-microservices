@@ -121,7 +121,7 @@ export function getUserProfile(userId, jwt) {
         return response.json();
       } else {
         return response.json().then((error) => {
-          return Promise.reject(error);
+          return Promise.reject(response.status);
         });
       }
     }).then((json) => {
@@ -186,6 +186,43 @@ export function postBookmark(url, jwt) {
 //         type: 'CLEAR_LOCAL_PROFILE',
 //         error: error.response
 //       });
+    });
+  }
+}
+
+export function getBookmarkByUrl(url, jwt, options) {
+  return (dispatch) => {
+    dispatch(
+      authenticate(jwt)
+    ).then((jwt) => {
+      dispatch({
+        type: 'GET_BOOKMARK_SENT',
+        url: url
+      });
+      return fetch(`/api/user/bookmark?path=${url}`, {
+        headers: {
+          ...authorizationHeader(jwt)
+        }
+      });
+    }).then((response) => {
+      if (response.status >= 200 && response.status < 300) {
+        console.log(response);
+        return response.json();
+      } else {
+        return response.json().then((error) => {
+          return Promise.reject(error);
+        });
+      }
+    }).then((json) => {
+      dispatch({
+        type: 'GET_BOOKMARK_SUCCESS',
+        data: json
+      });
+    }).catch((error) => {
+      dispatch(logout(error));
+      if (!options.ignoreError) {
+        dispatch(authenticate());
+      }
     });
   }
 }

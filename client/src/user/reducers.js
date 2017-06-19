@@ -5,7 +5,8 @@ const initialState = {
     loading: true,
     data: null,
     error: null
-  }
+  },
+  bookmarks: []
 }
 
 export default (state = initialState, action) => {
@@ -57,6 +58,29 @@ export default (state = initialState, action) => {
           error: action.error
         }
       };
+    // start of bookmark related reducers
+    // case 'POST_BOOKMARK_SENT':
+    //   return {
+    //     ...state,
+    //     bookmarks: {
+    //       ...state.bookmarks,
+    //       [action.bookmark.url]: {
+    //         url: action.bookmark.url
+    //       }
+    //     }
+    //   }
+    case 'POST_BOOKMARK_SUCCESS':
+      return {
+        ...state,
+        bookmarks: [
+          // TODO: fix the memory leak here
+          ...state.bookmarks,
+          {
+            id: action.data.id,
+            url: action.data.url
+          }
+        ]
+      }
     default:
       return state;
   }
