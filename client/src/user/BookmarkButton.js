@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import IconButton from 'material-ui/IconButton';
+import { amberA400 } from 'material-ui/styles/colors';
 import { connect } from 'react-redux';
 import { postBookmark, getBookmarkByUrl } from './actions';
+
 
 
 class BookmarkButton extends Component {
@@ -32,7 +34,7 @@ class BookmarkButton extends Component {
           fontSize: 12
         }}
         iconStyle={{
-          color: props.bookmarked ? "red" : "black"
+          color: props.bookmarked ? amberA400 : "black"
         }}
       >
         bookmark_border

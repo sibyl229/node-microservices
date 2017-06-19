@@ -70,16 +70,19 @@ export default (state = initialState, action) => {
     //     }
     //   }
     case 'POST_BOOKMARK_SUCCESS':
-      return {
-        ...state,
-        bookmarks: [
-          // TODO: fix the memory leak here
-          ...state.bookmarks,
-          {
-            id: action.data.id,
-            url: action.data.url
-          }
-        ]
+      if (state.bookmarks.filter((bookmark) => bookmark.id === action.data.id).length > 0) {
+        return state;
+      } else {
+        return {
+          ...state,
+          bookmarks: [
+            {
+              id: action.data.id,
+              url: action.data.url
+            },
+            ...state.bookmarks
+          ].slice(0, 10)
+        }
       }
     default:
       return state;

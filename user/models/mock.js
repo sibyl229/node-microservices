@@ -29,11 +29,15 @@ function getUser(userId) {
 function getBookmarks(userId, filterFunc) {
   return getUser(userId).then(
     (user) => {
+        console.log('zdfdfdfdaaaaaa');
+        console.log();
       return bookmarks.filter((bookmark) => {
+        console.log('dfdfdfdfdfd');
         if (filterFunc) {
-          return bookmark && bookmark.userId === userId;
-        } else {
+                    console.log(filterFunc(bookmark));
           return bookmark && bookmark.userId === userId && filterFunc(bookmark)
+        } else {
+          return bookmark && bookmark.userId === userId;
         }
       });
     }
@@ -42,20 +46,33 @@ function getBookmarks(userId, filterFunc) {
 
 function getBookmarkByUrl(userId, bookmarkUrl) {
   return getUser(userId).then(() => {
-    getBookmarks(userId, (bookmark) => bookmark.url === bookmarkUrl)
+    console.log('url zsdfdadsa');
+    return getBookmarks(userId, (bookmark) => bookmark.url === bookmarkUrl).then(
+      (bookmarks) => bookmarks[0]
+    );
   });
 }
 
 function addBookmark(userId, bookmark) {
   return getUser(userId).then(() => {
-    const id = bookmarks.length;
-    const newBookmark = {
-      id: id,
-      url: bookmark.url,
-      userId: userId
-    };
-    bookmarks.push(newBookmark);
-    return newBookmark;
+    return getBookmarkByUrl(userId, bookmark.url).then(
+      (existingBookmark) => {
+        console.log('existingBookmark');
+        console.log(existingBookmark);
+        if (existingBookmark) {
+          return existingBookmark;
+        } else {
+          const id = bookmarks.length;
+          const newBookmark = {
+            id: id,
+            url: bookmark.url,
+            userId: userId
+          };
+          bookmarks.push(newBookmark);
+          return newBookmark;
+        }
+      }
+    );
   });
 }
 
