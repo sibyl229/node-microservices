@@ -56,6 +56,11 @@ export default (state = initialState, action) => {
         ...state,
         redirect: action.redirect === '/user' ? state.redirect : (action.redirect || '/')
       }
+    case 'POST_AUTH_REDIRECT':
+      return {
+        ...state,
+        redirect: '/'
+      }
     case 'CLEAR_LOCAL_PROFILE':
       return {
         ...initialState,

@@ -105,6 +105,16 @@ export function authenticate(jwt, options={}) {
   }
 }
 
+export function postAuthRedirect() {
+  return (dispatch, getState) => {
+    const redirectPath = getState().user.redirect;
+    dispatch(push(redirectPath));
+    dispatch({
+      type: 'POST_AUTH_REDIRECT'
+    })
+  }
+}
+
 export function getUserProfile(userId, jwt) {
   return (dispatch) => {
 
@@ -136,6 +146,7 @@ export function getUserProfile(userId, jwt) {
       });
     }).catch((error) => {
       dispatch(logout(error));
+      dispatch(authenticate())
 //      dispatch(push('/user'));
 //       dispatch({
 // //        type: 'USER_PROFILE_FAILURE',

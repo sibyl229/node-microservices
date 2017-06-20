@@ -39,9 +39,6 @@ router.get('/', function (req, res) {
     state: req.session.uuid
   });
 
-  //TODO: compare redirectTo with a whitelist of trusted redirectPaths
-  // but still not ideal. Probably better to handle the redirect on client side
-  req.session.redirectTo = req.query.redirectTo;
   res.redirect(consentPageURL);
 });
 
@@ -73,7 +70,7 @@ router.get('/oauth2callback', function (req, res) {
               });
 
               // write cookie
-              res.cookie('JWT', token, { maxAge: 86400 * 1000 }).redirect(req.session.redirectTo);
+              res.cookie('JWT', token, { maxAge: 86400 * 1000 }).redirect('http://localhost:3004/authCallback');
             })
           }
         });

@@ -4,6 +4,7 @@ import './App.css';
 import theme from './app/theme';
 import AuthButton from './user/AuthButton';
 import UserProfile from './user/UserProfile';
+import AuthCallback from './user/AuthCallback';
 import GenericPage from './content/pages/GenericPage';
 import SearchPage  from './search/SearchPage';
 import GenericStaticPage from './staticContent/GenericStaticPage';
@@ -124,6 +125,7 @@ class App extends Component {
                 } />
                 <Route path="/search" component={SearchPage} />
                 <Route exact path="/guide" component={StaticIndexPage} />
+                <Route exact path="/authCallback" component={AuthCallback} />
                 <Route path="/guide/:id" render={
                   ({match}) => <GenericStaticPage contentUrl={`http://www.wormbase.org/rest/widget/static/${match.params.id}`} />
                 } />
