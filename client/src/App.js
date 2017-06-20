@@ -19,6 +19,7 @@ import SearchBox from './search/SearchBox';
 
 
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import { loadState, saveState } from './app/localStorage';
 import { Provider } from 'react-redux';
 
 
@@ -51,7 +52,7 @@ const composeEnhancers =
     }) : compose;
 
 const enhancer = composeEnhancers(
-  applyMiddleware(...middleware),
+  applyMiddleware(...middleware)
   // other store enhancers if any
 );
 const store = createStore(
@@ -61,7 +62,20 @@ const store = createStore(
     search: searchReducer,
     content: contentReducer,
     staticContent: staticContentReducer
-  }), enhancer);
+  }), loadState(), enhancer);
+
+  store.subscribe(() => {
+    // need to save the redirect path,
+    // so the app knows where to go after login through google
+    saveState({
+      user: store.getState().user
+    });
+  });
+
+setTimeout(() => {
+  console.log(store.getState());
+}, 300)
+//store.dispatch()
 
 // // Add the reducer to your store on the `router` key
 // // Also apply our middleware for navigating
