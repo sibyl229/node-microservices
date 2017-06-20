@@ -45,7 +45,7 @@ const GenericPage = (props) => {
                       />
                     </div>
                     <div style={{float: 'right', marginTop: '1em'}}><BookmarkButton url={props.location.pathname} /></div>
-                    <DataWidget />
+                    <DataWidget {...widgetRouteProps}/>
                   </div>
                 </div>
               )

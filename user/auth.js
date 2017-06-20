@@ -38,7 +38,7 @@ router.get('/', function (req, res) {
     // state: { foo: 'bar' }
     state: req.session.uuid
   });
-  req.session.redirectTo = req.query.redirectTo;
+
   res.redirect(consentPageURL);
 });
 
@@ -70,7 +70,7 @@ router.get('/oauth2callback', function (req, res) {
               });
 
               // write cookie
-              res.cookie('JWT', token, { maxAge: 86400 * 1000 }).redirect(req.session.redirectTo);
+              res.cookie('JWT', token, { maxAge: 86400 * 1000 }).redirect('http://localhost:3004/authCallback');
             })
           }
         });

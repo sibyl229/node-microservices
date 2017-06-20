@@ -74,7 +74,7 @@ export function logout(error) {
 };
 
 export function authenticate(jwt, options={}) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     return new Promise((resolve, reject) => {
       let validJwt = jwt;
       if (!validJwt) {
@@ -95,9 +95,23 @@ export function authenticate(jwt, options={}) {
       }
     }).catch((error) => {
       if (!options.ignoreError) {
-        dispatch(push('/user/profile'));
+        dispatch({
+          type: 'VISIT_LOGIN',
+          redirect: getState().router.location.pathname
+        });
+        dispatch(push('/user'));
       }
     });
+  }
+}
+
+export function postAuthRedirect() {
+  return (dispatch, getState) => {
+    const redirectPath = getState().user.redirect;
+    dispatch(push(redirectPath));
+    dispatch({
+      type: 'POST_AUTH_REDIRECT'
+    })
   }
 }
 
@@ -132,6 +146,7 @@ export function getUserProfile(userId, jwt) {
       });
     }).catch((error) => {
       dispatch(logout(error));
+      dispatch(authenticate())
 //      dispatch(push('/user'));
 //       dispatch({
 // //        type: 'USER_PROFILE_FAILURE',

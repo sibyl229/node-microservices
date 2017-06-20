@@ -4,6 +4,7 @@ import './App.css';
 import theme from './app/theme';
 import AuthButton from './user/AuthButton';
 import UserProfile from './user/UserProfile';
+import AuthCallback from './user/AuthCallback';
 import GenericPage from './content/pages/GenericPage';
 import SearchPage  from './search/SearchPage';
 import GenericStaticPage from './staticContent/GenericStaticPage';
@@ -19,6 +20,7 @@ import SearchBox from './search/SearchBox';
 
 
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import { loadState, saveState } from './app/localStorage';
 import { Provider } from 'react-redux';
 
 
@@ -51,7 +53,7 @@ const composeEnhancers =
     }) : compose;
 
 const enhancer = composeEnhancers(
-  applyMiddleware(...middleware),
+  applyMiddleware(...middleware)
   // other store enhancers if any
 );
 const store = createStore(
@@ -61,7 +63,20 @@ const store = createStore(
     search: searchReducer,
     content: contentReducer,
     staticContent: staticContentReducer
-  }), enhancer);
+  }), loadState(), enhancer);
+
+  store.subscribe(() => {
+    // need to save the redirect path,
+    // so the app knows where to go after login through google
+    saveState({
+      user: store.getState().user
+    });
+  });
+
+setTimeout(() => {
+  console.log(store.getState());
+}, 300)
+//store.dispatch()
 
 // // Add the reducer to your store on the `router` key
 // // Also apply our middleware for navigating
@@ -110,6 +125,7 @@ class App extends Component {
                 } />
                 <Route path="/search" component={SearchPage} />
                 <Route exact path="/guide" component={StaticIndexPage} />
+                <Route exact path="/authCallback" component={AuthCallback} />
                 <Route path="/guide/:id" render={
                   ({match}) => <GenericStaticPage contentUrl={`http://www.wormbase.org/rest/widget/static/${match.params.id}`} />
                 } />
